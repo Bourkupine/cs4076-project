@@ -21,6 +21,8 @@ set(PROJECT_SOURCES
         ingredient.h
         recipe.h
         recipe.cpp
+        popup.h
+        popup.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

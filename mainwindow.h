@@ -15,6 +15,16 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+private slots:
+
+    void on_viewRecipes_clicked();
+
+    void on_addRecipe_clicked();
+
+    void on_viewIngredients_2_clicked();
+
+    void on_addIngredients_clicked();
+
 private:
     Ui::MainWindow *ui;
 };
