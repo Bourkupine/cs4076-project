@@ -25,6 +25,9 @@ private slots:
 
     void on_addIngredients_clicked();
 
+    void on_createRecipe_clicked();
+
+
 private:
     Ui::MainWindow *ui;
 };
