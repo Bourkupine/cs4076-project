@@ -1,6 +1,7 @@
 #ifndef INGREDIENT_H
 #define INGREDIENT_H
 
+#include <QMainWindow>
 #include <string>
 #include <vector>
 
@@ -11,15 +12,15 @@ class Ingredient
 
 private:
     int cal;
-    string name;
-    vector<string> allergies; //maybe use array since allergies wont be changing
+    QString name;
+    map<QString, bool> allergies;
 
 public:
-    Ingredient(int cal, string name, vector<string> allergies);
+    Ingredient(int cal, QString name, map<QString, bool> allergies);
 
     int getCal();
-    string getName();
-    vector<string> getAllergies();
+    QString getName();
+    map<QString, bool> getAllergies();
 };
 
 #endif // INGREDIENT_H

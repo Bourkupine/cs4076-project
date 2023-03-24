@@ -1,25 +1,28 @@
 #ifndef RECIPE_H
 #define RECIPE_H
 
+#include <QMainWindow>
 #include "ingredient.h"
 
 using namespace std;
 
 
 
-class recipe {
+class Recipe {
 private:
     struct IngAndAm {
         Ingredient ingredient;
         int amount;
     };
     vector<IngAndAm> ingredientsAndAmount;
-    string name;
+    QString name;
+    map<QString, bool> allergies;
 
 public:
-    recipe();
-    string getName();
-    string getIngredientAndAmount(int index); //might change this to be a struct
+    Recipe(QString name);
+    QString getName();
+    QString getIngredientAndAmount(int index); //might change this to be a struct
+    map<QString, bool> getAllergies();
 };
 
 #endif // RECIPE_H

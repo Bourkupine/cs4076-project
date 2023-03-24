@@ -1,14 +1,18 @@
 #include "recipe.h"
 
-recipe::recipe() {
-
+Recipe::Recipe(QString name) {
+    this->name = name;
 }
 
-string recipe::getName() {
+QString Recipe::getName() {
     return name;
 }
 
-string recipe::getIngredientAndAmount(int index) {
+QString Recipe::getIngredientAndAmount(int index) {
     //make this return Ingredient | Amount
     //return ingredientsAndAmount.at(index);
+}
+
+map<QString, bool> Recipe::getAllergies() {
+    return allergies;
 }

@@ -3,9 +3,13 @@
 
 #include <QMainWindow>
 
+#include "qlistwidget.h"
+#include "recipe.h"
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
+using namespace std;
 
 class MainWindow : public QMainWindow
 {
@@ -28,7 +32,16 @@ private slots:
     void on_createRecipe_clicked();
 
 
+    void on_createIngredient_clicked();
+
+    void on_viewAllergies_itemClicked(QListWidgetItem *item);
+
 private:
     Ui::MainWindow *ui;
+    map<QString, bool> allergies;
+    void populateMap();
+    vector<Recipe> recipes;
+    vector<Ingredient> ingredients;
+    vector<QListWidgetItem*> tempAllergies;
 };
 #endif // MAINWINDOW_H
