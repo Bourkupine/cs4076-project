@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <algorithm>
 
 #include "qlistwidget.h"
 #include "recipe.h"
@@ -34,7 +35,12 @@ private slots:
 
     void on_createIngredient_clicked();
 
-    void on_viewAllergies_itemClicked(QListWidgetItem *item);
+
+    void on_inspectIngredientEdit_clicked();
+
+    void on_inspectIngredientDelete_clicked();
+
+    void on_viewIngredient_clicked();
 
 private:
     Ui::MainWindow *ui;
