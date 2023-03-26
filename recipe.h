@@ -21,7 +21,7 @@ private:
 public:
     Recipe(QString name);
     QString getName();
-    QString getIngredientAndAmount(int index); //might change this to be a struct
+    QString getIngredientAndAmount(int index);
     map<QString, bool> getAllergies();
 };
 

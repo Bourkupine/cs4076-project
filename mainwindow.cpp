@@ -94,6 +94,7 @@ void MainWindow::on_createIngredient_clicked()
        ingredients.insert(ingredients.end(), i);
        ui->listOfIngredients->addItem(i.getName());
        ui->lineEdit_2->setText("");
+       ui->calAmount->setValue(0);
     }
 
 }
