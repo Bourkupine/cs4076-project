@@ -1,5 +1,12 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
+#include<QDebug>
+
+#define EASY 0
+#define MEDIUM 1
+#define HARD 2
+
+vector<Recipe*> recipes;
 
 #include <iostream>
 
@@ -37,6 +44,9 @@ void MainWindow::populateMap() {
 
 MainWindow::~MainWindow()
 {
+    for(Recipe * r : recipes) {
+        delete r;
+    }
     delete ui;
 }
 
@@ -83,33 +93,40 @@ void MainWindow::on_createRecipe_clicked() //create a recipe
     int time = ui->createRecipeTime->value();
     QString instructions = ui->createRecipeInstructions->toPlainText();
 
-    for(int row = 0; row < ui->createRecipeIngredients->count(); row++) {
-        QListWidgetItem *item = ui->createRecipeIngredients->item(row);
-        if(item->checkState() == Qt::Checked) {
+    //we need to get allergies
+    //loop through stuct
+    //get ingredient
+    //have temp allergies
+    //add allergies
+    //CRASH HERE
+    for(int i = 0; i < tempStruct.size(); i++) {
+        //Recipe::IngAndAm temp(*tempStruct.at(i).ingredient, tempStruct.at(i).amount);
+        //tempAllergies = temp.ingredient->getAllergies();
+        //instead loop through getAllergies and add the true ones;
 
-            //            for(Ingredient i : ingredients) {
-            //                if(i.getName() == item->text()) { //i is our ingredient
-            //                    Recipe::IngAndAm s(i, )
-            //                }
-            //            }
+        //for each allergy in ingredient tempStruct.at(i).ingredient
+        //if allergy second = true,
+        //and tempAllergy of allergy name = false
+        //set allergy to true;
 
+
+        Ingredient *ing = tempStruct.at(i).ingredient;
+
+        //crash
+        //map<QString, bool> all = ing->getAllergies();
+
+        //it appears like temptStruct isnt getting filled with values
+        //or ing isnt getting the value of tempStruct.at(i)
+        for(auto const &p : ing->getAllergies()) {
+            if(p.second == true) {
+                tempAllergies[p.first] = true;
+            }
         }
     }
 
-
-    //loop through all values and get the ticked ones along with ingredient and amount
-    //convert them to structs
-    //insert into vector
-    //for(QListWidgetItem *item : )
-
-
-    //    if (!recipeName.isEmpty()) {
-    //        Recipe r(recipeName, fav, makes, time, instructions, ingredients, allergies);
-    //        recipes.insert(recipes.end(), r);
-    //        ui->listOfRecipes->addItem(r.getName());
-    //        ui->createRecipeName->setText("");
-    //    }
-
+    Recipe *r = new Recipe(recipeName, fav, makes, time, instructions, tempStruct, tempAllergies);
+    recipes.insert(recipes.end(), r);
+    ui->listOfRecipes->addItem(recipeName);
 }
 
 void MainWindow::on_createIngredient_clicked()
@@ -158,6 +175,40 @@ void MainWindow::on_createIngredient_clicked()
 //send to Add ingredient but fill out boxes with current ones
 void MainWindow::on_inspectIngredientEdit_clicked()
 {
+    //set current window to Add Ingredient
+    ui->stackedWidget->setCurrentIndex(5);
+
+    QString name = ui->inspectIngredientName->text();
+
+    for(Ingredient i : ingredients) {
+        if(i.getName() == name) {
+
+            ui->lineEdit_2->setText(name);
+            ui->calAmount->setValue(i.getCal());
+
+            map<QString, bool> m = i.getAllergies();
+            //not working
+            //its adds all, instead set ticks to be the true ones
+
+            //for each allergy in viewAllergies
+            //if it is in i.getAllergies then
+            //set checkstate to true
+            for(int j = 0; j < ui->viewAllergies->count(); j++) {
+                if(ui->viewAllergies->item(j) /*something*/) {}
+            }
+
+//            for(auto const &p : i.getAllergies()) {
+//                if(p.second == true) {
+//                    //add allergies to the inspect ingredient allergy list
+//                    ui->viewAllergies->currentItem()->setCheckState(Qt::Checked);
+//                }
+//            }
+
+
+        }
+    }
+
+    //fill in values with current one
 
 }
 
@@ -169,67 +220,116 @@ void MainWindow::on_inspectIngredientDelete_clicked()
 }
 
 
+void MainWindow::on_addIngredientToRecipe_clicked()
+{
+    int amount = ui->ingredientAmount->value();
+    QListWidgetItem *item = ui->createRecipeIngredients->currentItem();
+
+    for(Ingredient i : ingredients) {
+        string iName = i.getName().QString::toStdString();
+        string itemName = item->text().toStdString();
+        if (iName == itemName) {
+            tempStruct.insert(tempStruct.end(), *new Recipe::IngAndAm(i, amount));
+            item->setHidden(true);
+            ui->actualRecipeIngredients->addItem(item -> text());
+            break;
+        }
+    }
+}
+
+
 //view an ingredient
 void MainWindow::on_viewIngredient_clicked()
 {
     QListWidgetItem *item = ui->listOfIngredients->currentItem();
 
 
-    Ingredient i = getIngredientFromItem(item);
+    //Ingredient i = getIngredientFromItem(item);
+
+    for(Ingredient i : ingredients) {
+        if(i.getName() == item->text()) {
 
 
-    //set current page to inspect ingredient
-    ui->stackedWidget->setCurrentIndex(1);
+            //set current page to inspect ingredient
+            ui->stackedWidget->setCurrentIndex(1);
 
-    //get ingredients info
-    ui->inspectIngredientName->setText(i.getName());
-    ui->inspectIngredientCal->setText(QString::number(i.getCal()));
-    //not implemented yet ui->inspectIngredientUnit->setText();
+            //get ingredients info
+            ui->inspectIngredientName->setText(i.getName());
+            ui->inspectIngredientCal->setText(QString::number(i.getCal()));
+            //not implemented yet ui->inspectIngredientUnit->setText();
 
-    //loop through allergies and add the allgeries
-    for(auto const &p : i.getAllergies()) {
-        if(p.second == true) {
-            QListWidgetItem *item = new QListWidgetItem;
-            item->setText(p.first);
-            //add allergies to the inspect ingredient allergy list
-            ui->inspectIngredientAllergies->addItem(item);
+            //loop through allergies and add the allgeries
+            for(auto const &p : i.getAllergies()) {
+                if(p.second == true) {
+                    QListWidgetItem *item = new QListWidgetItem;
+                    item->setText(p.first);
+                    //add allergies to the inspect ingredient allergy list
+                    ui->inspectIngredientAllergies->addItem(item);
+                }
+            }
+
         }
     }
 
-
 }
 
 
-void MainWindow::on_pushButton_4_clicked()
+
+void MainWindow::on_viewRecipe_2_clicked()
 {
-    int amount = ui->ingredientAmount->value();
-    QListWidgetItem *item = ui->createRecipeIngredients->currentItem();
+    QListWidgetItem *item = ui->listOfRecipes->currentItem();
 
-    Ingredient i = getIngredientFromItem(item);
+    for(Recipe *r : recipes) {
+        if(r->getName() == item->text()) {
+            //set page to inspect recipe
+            ui->stackedWidget->setCurrentIndex(4);
 
-    Recipe::IngAndAm a(i, amount);
+            //get recipe info
+            ui->inspectRecipeName->setText(r->getName());
+            ui->inspectRecipeInstructions->setText(r->getInstructions());
+            Qt::CheckState checkstate = r->getFav() ? Qt::Checked : Qt::Unchecked;
+            ui->inspectRecipeFav->setCheckState(checkstate);
 
-    //tempStruct.insert(tempStruct.end(), a);
+            QString diff;
 
-    ui->actualRecipeIngredients->addItem(item);
-    //QString newString =
+            switch(r->getDifficulty()) {
+            case EASY : diff = "Easy"; break;
+            case MEDIUM : diff = "Medium"; break;
+            case HARD: diff = "Hard"; break;
+            }
 
+            ui->inspectRecipeDifficulty->setText(diff);
+            ui->inspectRecipeTime->setText(QString::number(r->getTime()));
+            ui->inspectRecipeMakes->setText(QString::number(r->getTime()));
+
+            //set ingredients
+
+
+        }
+    }
 }
 
-Ingredient MainWindow::getIngredientFromItem(QListWidgetItem *item) {
 
-    //we can just return i inside the loop as we know there will always be a matching ingredient
+void MainWindow::on_searchIngredientButton_clicked() //creates a duplicate for some reason
+{
+    QString search = ui->searchIngredientName->text();
+
+    ui->listOfIngredients->clear();
+
     for(Ingredient i : ingredients) {
-        string t = i.getName().QString::toStdString();
-        string t2 = item->text().QString::toStdString();
-        cout << t << endl;
-        cout << t2 << endl;
-//        if(t == t2) { //i is our ingredient
-//            cout << i.getName().QString::toStdString();
-//            cout << item->text().QString::toStdString();
+        QString iName = i.getName();
 
-//            //return i;
-//        }
+        if (iName.contains(search)) {
+            searchIngredients.push_back(i);
+        }
+
     }
+    for(Ingredient i : searchIngredients) {
+
+        ui->listOfIngredients->addItem(i.getName());
+
+    }
+
+    searchIngredients.clear();
 }
 

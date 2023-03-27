@@ -17,7 +17,7 @@ void Recipe::calcAllergies(){
     //get allergies and add to map
 
     for(IngAndAm &ing : ingredientsAndAmount) {
-        for(auto const &ingMap : ing.ingredient.getAllergies()) {
+        for(auto const &ingMap : ing.ingredient->getAllergies()) {
             if(ingMap.second == true && allergies[ingMap.first] == false) {
                 allergies[ingMap.first] = true;
             }
@@ -25,15 +25,31 @@ void Recipe::calcAllergies(){
     }
 }
 
+
+//getters
 QString Recipe::getName() {
     return name;
 }
-
-QString Recipe::getIngredientAndAmount(int index) {
-    //make this return Ingredient | Amount
-    //return ingredientsAndAmount.at(index);
+bool Recipe::getFav() {
+    return fav;
+}
+int Recipe::getMakes() {
+    return makes;
+}
+int Recipe::getTime() {
+    return time;
+}
+QString Recipe::getInstructions() {
+    return instructions;
+}
+vector<Recipe::IngAndAm> Recipe::getIngAndAm() {
+    return ingredientsAndAmount;
 }
 
 map<QString, bool> Recipe::getAllergies() {
     return allergies;
 }
+int Recipe::getDifficulty() {
+    return difficulty;
+}
+

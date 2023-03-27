@@ -4,6 +4,8 @@
 
 class Popup
 {
+private:
+
 public:
     Popup(bool newPopup);
 };

@@ -55,7 +55,7 @@
       <item>
        <widget class="QStackedWidget" name="stackedWidget">
         <property name="currentIndex">
-         <number>3</number>
+         <number>5</number>
         </property>
         <widget class="QWidget" name="viewRecipe">
          <widget class="QWidget" name="gridLayoutWidget_6">
@@ -68,16 +68,6 @@
            </rect>
           </property>
           <layout class="QGridLayout" name="gridLayout_7">
-           <item row="0" column="0">
-            <widget class="QLabel" name="label_7">
-             <property name="text">
-              <string>Search</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="1">
-            <widget class="QListWidget" name="listWidget"/>
-           </item>
            <item row="0" column="1">
             <widget class="QLineEdit" name="lineEdit_5"/>
            </item>
@@ -87,6 +77,9 @@
               <string>Search</string>
              </property>
             </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="QListWidget" name="listOfRecipes"/>
            </item>
            <item row="1" column="1">
             <layout class="QHBoxLayout" name="horizontalLayout_3">
@@ -179,6 +172,26 @@
               </widget>
              </item>
             </layout>
+           </item>
+           <item row="0" column="0">
+            <widget class="QLabel" name="label_7">
+             <property name="text">
+              <string>Search</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="1" alignment="Qt::AlignHCenter">
+            <widget class="QPushButton" name="viewRecipe_2">
+             <property name="minimumSize">
+              <size>
+               <width>200</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>View</string>
+             </property>
+            </widget>
            </item>
           </layout>
          </widget>
@@ -297,14 +310,14 @@
           </property>
           <layout class="QGridLayout" name="gridLayout_6">
            <item row="0" column="2">
-            <widget class="QPushButton" name="searchIngredient">
+            <widget class="QPushButton" name="searchIngredientButton">
              <property name="text">
               <string>Search</string>
              </property>
             </widget>
            </item>
            <item row="0" column="1">
-            <widget class="QLineEdit" name="lineEdit_6"/>
+            <widget class="QLineEdit" name="searchIngredientName"/>
            </item>
            <item row="0" column="0">
             <widget class="QLabel" name="label_21">
@@ -424,7 +437,7 @@ QRadioButton:unchecked{
             </widget>
            </item>
            <item row="5" column="5">
-            <widget class="QPushButton" name="pushButton_4">
+            <widget class="QPushButton" name="addIngredientToRecipe">
              <property name="text">
               <string>Add Ingredient</string>
              </property>
@@ -583,7 +596,7 @@ QRadioButton:unchecked{
             </widget>
            </item>
            <item row="4" column="1">
-            <widget class="QLineEdit" name="lineEdit_4">
+            <widget class="QLineEdit" name="inspectRecipeDifficulty">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                <horstretch>0</horstretch>
@@ -602,7 +615,7 @@ QRadioButton:unchecked{
             </widget>
            </item>
            <item row="4" column="3">
-            <widget class="QLineEdit" name="lineEdit">
+            <widget class="QLineEdit" name="inspectRecipeMakes">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
                <horstretch>0</horstretch>
@@ -643,7 +656,7 @@ QRadioButton:unchecked{
             </widget>
            </item>
            <item row="3" column="0" colspan="3">
-            <widget class="QTextEdit" name="createRecipeInstructions_2">
+            <widget class="QTextEdit" name="inspectRecipeInstructions">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
                <horstretch>0</horstretch>
@@ -663,7 +676,7 @@ QRadioButton:unchecked{
             </widget>
            </item>
            <item row="4" column="5">
-            <widget class="QLineEdit" name="lineEdit_3">
+            <widget class="QLineEdit" name="inspectRecipeTime">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                <horstretch>0</horstretch>
@@ -724,7 +737,7 @@ QRadioButton:unchecked{
             </widget>
            </item>
            <item row="0" column="1" colspan="4">
-            <widget class="QLineEdit" name="createRecipeName_2">
+            <widget class="QLineEdit" name="inspectRecipeName">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
                <horstretch>0</horstretch>
@@ -743,7 +756,7 @@ QRadioButton:unchecked{
             </widget>
            </item>
            <item row="0" column="5" alignment="Qt::AlignRight">
-            <widget class="QCheckBox" name="createRecipeFav_2">
+            <widget class="QCheckBox" name="inspectRecipeFav">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                <horstretch>0</horstretch>
@@ -769,7 +782,7 @@ QRadioButton:unchecked{
             </widget>
            </item>
            <item row="3" column="3" colspan="3">
-            <widget class="QListWidget" name="createRecipeIngredients_2">
+            <widget class="QListWidget" name="inspectRecipeIngredients">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                <horstretch>0</horstretch>
@@ -911,7 +924,7 @@ QRadioButton:unchecked{
      <x>0</x>
      <y>0</y>
      <width>808</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
   </widget>

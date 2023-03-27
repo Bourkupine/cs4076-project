@@ -42,16 +42,18 @@ private slots:
 
     void on_viewIngredient_clicked();
 
-    void on_pushButton_4_clicked();
+    void on_addIngredientToRecipe_clicked();
 
-    Ingredient getIngredientFromItem(QListWidgetItem *item);
+    void on_viewRecipe_2_clicked();
+
+    void on_searchIngredientButton_clicked();
 
 private:
     Ui::MainWindow *ui;
     map<QString, bool> allergies;
-    vector<Recipe> recipes;
     vector<Ingredient> ingredients;
-    vector<QListWidgetItem*> tempAllergies;
+    vector<Ingredient> searchIngredients;
+    map<QString, bool> tempAllergies;
     vector<Recipe::IngAndAm> tempStruct;
     void populateMap();
 };

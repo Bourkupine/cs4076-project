@@ -9,13 +9,21 @@ using namespace std;
 class Recipe {
 private:
     struct IngAndAm {
-        Ingredient ingredient;
+        Ingredient *ingredient;
         int amount;
 
+        //constructor
         IngAndAm(Ingredient ingredient, int amount)
-            : ingredient(ingredient)
-            , amount(amount)
-        {}
+            : amount(amount)
+        {
+            this->ingredient = new Ingredient;
+            *this->ingredient = ingredient;
+        }
+
+        //destructor
+        ~IngAndAm() {
+            delete this->ingredient;
+        }
 
     };
 
@@ -27,15 +35,20 @@ private:
     vector<IngAndAm> ingredientsAndAmount;
     QString name;
     map<QString, bool> allergies;
+    int difficulty;
 
 public:
     Recipe(QString name, bool fav, int makes, int time, QString instructions, vector<IngAndAm> ingredientsAndAmount, map<QString, bool> allergies);
     void calcAllergies();
 
     QString getName();
-    QString getIngredientAndAmount(int index);
+    bool getFav();
+    int getMakes();
+    int getTime();
+    QString getInstructions();
+    vector<IngAndAm> getIngAndAm();
     map<QString, bool> getAllergies();
-
+    int getDifficulty();
     friend class MainWindow;
 
 };

@@ -16,11 +16,13 @@ private:
     map<QString, bool> allergies;
 
 public:
+    Ingredient();
     Ingredient(int cal, QString name, map<QString, bool> allergies);
+    Ingredient(const Ingredient &ingredient);
 
     int getCal();
     QString getName();
-    map<QString, bool> getAllergies();
+    map<QString, bool>& getAllergies();
 };
 
 #endif // INGREDIENT_H

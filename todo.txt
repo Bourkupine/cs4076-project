@@ -18,6 +18,8 @@ Add Recipe:
 		[] Ingredient Name [100]g
 		Use inheritance to figure out if its grams or ml
 		make it only show amount when you select it
+	When adding ingredients users should only be able to select one ingredient at a time
+
 
 View Ingredient:
 	search functionality
@@ -32,7 +34,7 @@ Virtual Inheritance:
 	different types of ingredients
 		-liquids... etc...
 	which would have their own properties such as type of measurement (ml/g)
-	Vegan opetion
+	Vegan option
 
 Bit Map:
 	0 or 1 value for something.
@@ -46,6 +48,9 @@ Union:
 	store the amount using union (double d, int i) 
 	01101100 -> 0110//1100
 
+Inheritance:
+	Liquid/Solid (ml/gram)
+	Write to CSV
 
 
   QMenu 
@@ -64,18 +69,29 @@ Union:
   Unions
 X Operator overloading
   Abstract classes
-  Copy constructors (deep , shallow copy)
-  Bit structures
-  Advanced pre-processor directives
+X Copy constructors (deep , shallow copy)
+  Bit structures				//bit map of vegan/vegetarian
+X Advanced pre-processor directives
   C++ Object Construction Sequence
 X Initializer List
   C++ References
-  Pointers
+X Pointers					
   Inheritance
-  Destructors
-  Memory management
+X Destructors
+X Memory management
   Header files (inclusion guards)
   Arrays and pointers
 X Friendship
-  Global variables
+X Global variables
   Private, Public, Protected
+
+
+
+
+Recipe name
+Bool fav
+QString instructions
+Ingredients
+Difficulty
+Int Makes
+Int Time
