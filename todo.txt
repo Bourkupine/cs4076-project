@@ -2,7 +2,7 @@ Recipe:
 	dont allow dupes
 
 View Recipe:
-	have a button beside search that opens the advanced search options
+	have a button beside search that opens the advanced search options -> allergies, 
 	difficulty
 	sort by favourites
 	have a horizontal slider with time
@@ -41,6 +41,11 @@ Bit Map:
 	use bitset	
 		vegetarian = 1 << 0
 		vegan = 1 << 1;
+
+Union:
+	store the amount using union (double d, int i) 
+	01101100 -> 0110//1100
+
 
 
   QMenu 
