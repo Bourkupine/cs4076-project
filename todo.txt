@@ -1,0 +1,76 @@
+Recipe:
+	dont allow dupes
+
+View Recipe:
+	have a button beside search that opens the advanced search options
+	difficulty
+	sort by favourites
+	have a horizontal slider with time
+	add allergy search
+	bit wise operations :"amount made" -> left shift to double amount
+
+Add Recipe:
+	Fix radio button colour
+	Add favourite button
+	Add amount made
+	Make time to make formatted for time
+	When adding ingredient, there needs to be a tickbox AND a spin box for amount:
+		[] Ingredient Name [100]g
+		Use inheritance to figure out if its grams or ml
+		make it only show amount when you select it
+
+View Ingredient:
+	search functionality
+
+Add Ingredient:
+	reset allergies check boxes
+	reset calorie amount
+	instead of adding it based off when an ingredient is selected, after clicking button, check the state of the ingedients
+
+
+Virtual Inheritance:
+	different types of ingredients
+		-liquids... etc...
+	which would have their own properties such as type of measurement (ml/g)
+	Vegan opetion
+
+Bit Map:
+	0 or 1 value for something.
+	00100110, each bit represents something (maps to it)
+	00 for vegan and vegetarian
+	use bitset	
+		vegetarian = 1 << 0
+		vegan = 1 << 1;
+
+
+  QMenu 
+  QCheckBox 
+  QRadioButton 
+  QSlider 
+  QGridLayout 
+  QBoxLayout
+
+
+  Virtual functions
+  template classes
+  Multiple inheritance
+  namespaces
+  Programmer defined exceptions
+  Unions
+X Operator overloading
+  Abstract classes
+  Copy constructors (deep , shallow copy)
+  Bit structures
+  Advanced pre-processor directives
+  C++ Object Construction Sequence
+X Initializer List
+  C++ References
+  Pointers
+  Inheritance
+  Destructors
+  Memory management
+  Header files (inclusion guards)
+  Arrays and pointers
+X Friendship
+  Global variables
+  Private, Public, Protected

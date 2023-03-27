@@ -1,15 +1,15 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
 
+#include <iostream>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
-    populateMap();
-
-
     ui->setupUi(this);
+
+    populateMap();
 
     for (const auto &p : allergies) {
 
@@ -83,18 +83,32 @@ void MainWindow::on_createRecipe_clicked() //create a recipe
     int time = ui->createRecipeTime->value();
     QString instructions = ui->createRecipeInstructions->toPlainText();
 
+    for(int row = 0; row < ui->createRecipeIngredients->count(); row++) {
+        QListWidgetItem *item = ui->createRecipeIngredients->item(row);
+        if(item->checkState() == Qt::Checked) {
+
+            //            for(Ingredient i : ingredients) {
+            //                if(i.getName() == item->text()) { //i is our ingredient
+            //                    Recipe::IngAndAm s(i, )
+            //                }
+            //            }
+
+        }
+    }
+
+
     //loop through all values and get the ticked ones along with ingredient and amount
     //convert them to structs
     //insert into vector
     //for(QListWidgetItem *item : )
 
 
-//    if (!recipeName.isEmpty()) {
-//        Recipe r(recipeName, fav, makes, time, instructions, ingredients, allergies);
-//        recipes.insert(recipes.end(), r);
-//        ui->listOfRecipes->addItem(r.getName());
-//        ui->createRecipeName->setText("");
-//    }
+    //    if (!recipeName.isEmpty()) {
+    //        Recipe r(recipeName, fav, makes, time, instructions, ingredients, allergies);
+    //        recipes.insert(recipes.end(), r);
+    //        ui->listOfRecipes->addItem(r.getName());
+    //        ui->createRecipeName->setText("");
+    //    }
 
 }
 
@@ -108,33 +122,33 @@ void MainWindow::on_createIngredient_clicked()
     for(int row = 0; row < ui->viewAllergies->count(); row++) {
         QListWidgetItem *item = ui->viewAllergies->item(row);
         if(item->checkState() == Qt::Checked)
-        temp[item->text()] = true;
+            temp[item->text()] = true;
     }
 
 
     //check if it doesnt exist already
     //get map
     if (!ingredientName.isEmpty()) {
-       Ingredient i(calAmount, ingredientName, temp);
+        Ingredient i(calAmount, ingredientName, temp);
 
-       //insert into the ingredient array and display in the ingredient ListWidget in View Ingredients
-       ingredients.insert(ingredients.end(), i);
-       ui->listOfIngredients->addItem(i.getName());
+        //insert into the ingredient array and display in the ingredient ListWidget in View Ingredients
+        ingredients.insert(ingredients.end(), i);
+        ui->listOfIngredients->addItem(i.getName());
 
-       //resets fields
-       ui->lineEdit_2->setText("");
-       ui->calAmount->setValue(0);
+        //resets fields
+        ui->lineEdit_2->setText("");
+        ui->calAmount->setValue(0);
 
-       //sets allergy ticks to unchecked
-       for(int row = 0; row < ui->viewAllergies->count(); row++) {
-           QListWidgetItem *item = ui->viewAllergies->item(row);
-           if (item->checkState() == Qt::Checked) item->setCheckState(Qt::Unchecked);
-       }
+        //sets allergy ticks to unchecked
+        for(int row = 0; row < ui->viewAllergies->count(); row++) {
+            QListWidgetItem *item = ui->viewAllergies->item(row);
+            if (item->checkState() == Qt::Checked) item->setCheckState(Qt::Unchecked);
+        }
 
-       //make a new row in the ingredients list in Add Recipe
-       QListWidgetItem *item = new QListWidgetItem(i.getName());
-       item->setCheckState(Qt::Unchecked);
-       ui->createRecipeIngredients->addItem(item);
+        //make a new row in the ingredients list in Add Recipe
+        QListWidgetItem *item = new QListWidgetItem(i.getName());
+        item->setCheckState(Qt::Unchecked);
+        ui->createRecipeIngredients->addItem(item);
     }
 
 }
@@ -160,27 +174,62 @@ void MainWindow::on_viewIngredient_clicked()
 {
     QListWidgetItem *item = ui->listOfIngredients->currentItem();
 
-    for(Ingredient i : ingredients) {
-        if(i.getName() == item->text()) { //i is our ingredient
 
-            //set current page to inspect ingredient
-            ui->stackedWidget->setCurrentIndex(1);
+    Ingredient i = getIngredientFromItem(item);
 
-            //get ingredients info
-            ui->inspectIngredientName->setText(i.getName());
-            ui->inspectIngredientCal->setText(QString::number(i.getCal()));
-            //not implemented yet ui->inspectIngredientUnit->setText();
 
-            //loop through allergies and add the allgeries
-            for(auto const &p : i.getAllergies()) {
-                if(p.second == true) {
-                    QListWidgetItem *item = new QListWidgetItem;
-                    item->setText(p.first);
-                    //add allergies to the inspect ingredient allergy list
-                    ui->inspectIngredientAllergies->addItem(item);
-                }
-            }
+    //set current page to inspect ingredient
+    ui->stackedWidget->setCurrentIndex(1);
+
+    //get ingredients info
+    ui->inspectIngredientName->setText(i.getName());
+    ui->inspectIngredientCal->setText(QString::number(i.getCal()));
+    //not implemented yet ui->inspectIngredientUnit->setText();
+
+    //loop through allergies and add the allgeries
+    for(auto const &p : i.getAllergies()) {
+        if(p.second == true) {
+            QListWidgetItem *item = new QListWidgetItem;
+            item->setText(p.first);
+            //add allergies to the inspect ingredient allergy list
+            ui->inspectIngredientAllergies->addItem(item);
         }
+    }
+
+
+}
+
+
+void MainWindow::on_pushButton_4_clicked()
+{
+    int amount = ui->ingredientAmount->value();
+    QListWidgetItem *item = ui->createRecipeIngredients->currentItem();
+
+    Ingredient i = getIngredientFromItem(item);
+
+    Recipe::IngAndAm a(i, amount);
+
+    //tempStruct.insert(tempStruct.end(), a);
+
+    ui->actualRecipeIngredients->addItem(item);
+    //QString newString =
+
+}
+
+Ingredient MainWindow::getIngredientFromItem(QListWidgetItem *item) {
+
+    //we can just return i inside the loop as we know there will always be a matching ingredient
+    for(Ingredient i : ingredients) {
+        string t = i.getName().QString::toStdString();
+        string t2 = item->text().QString::toStdString();
+        cout << t << endl;
+        cout << t2 << endl;
+//        if(t == t2) { //i is our ingredient
+//            cout << i.getName().QString::toStdString();
+//            cout << item->text().QString::toStdString();
+
+//            //return i;
+//        }
     }
 }
 

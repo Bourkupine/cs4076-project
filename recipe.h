@@ -11,7 +11,15 @@ private:
     struct IngAndAm {
         Ingredient ingredient;
         int amount;
+
+        IngAndAm(Ingredient ingredient, int amount)
+            : ingredient(ingredient)
+            , amount(amount)
+        {}
+
     };
+
+
     bool fav;
     int makes;
     int time;
@@ -22,7 +30,6 @@ private:
 
 public:
     Recipe(QString name, bool fav, int makes, int time, QString instructions, vector<IngAndAm> ingredientsAndAmount, map<QString, bool> allergies);
-
     void calcAllergies();
 
     QString getName();
