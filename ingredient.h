@@ -10,17 +10,19 @@ using namespace std;
 class Ingredient
 {
 
-private:
-    int cal;
+protected:
     QString name;
     map<QString, bool> allergies;
 
 public:
+    virtual QString getType() = 0;
     Ingredient();
-    Ingredient(int cal, QString name, map<QString, bool> allergies);
+    Ingredient(QString name, map<QString, bool> allergies);
     Ingredient(const Ingredient &ingredient);
+    virtual ~Ingredient();
 
-    int getCal();
+    void setName(QString s);
+    void setAllergies(map<QString, bool> m);
     QString getName();
     map<QString, bool>& getAllergies();
 };

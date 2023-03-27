@@ -2,43 +2,25 @@
 #define RECIPE_H
 
 #include <QMainWindow>
-#include "ingredient.h"
+
+#include "ingredientamount.h"
 
 using namespace std;
 
 class Recipe {
 private:
-    struct IngAndAm {
-        Ingredient *ingredient;
-        int amount;
-
-        //constructor
-        IngAndAm(Ingredient ingredient, int amount)
-            : amount(amount)
-        {
-            this->ingredient = new Ingredient;
-            *this->ingredient = ingredient;
-        }
-
-        //destructor
-        ~IngAndAm() {
-            delete this->ingredient;
-        }
-
-    };
-
 
     bool fav;
     int makes;
     int time;
+    vector<IngredientAmount> ingredientAmount;
     QString instructions;
-    vector<IngAndAm> ingredientsAndAmount;
     QString name;
     map<QString, bool> allergies;
     int difficulty;
 
 public:
-    Recipe(QString name, bool fav, int makes, int time, QString instructions, vector<IngAndAm> ingredientsAndAmount, map<QString, bool> allergies);
+    Recipe(QString name, bool fav, int makes, int time, QString instructions, vector<IngredientAmount> IngredientAmount, map<QString, bool> allergies);
     void calcAllergies();
 
     QString getName();
@@ -46,9 +28,11 @@ public:
     int getMakes();
     int getTime();
     QString getInstructions();
-    vector<IngAndAm> getIngAndAm();
+    vector<IngredientAmount> getIngredientAmount();
     map<QString, bool> getAllergies();
     int getDifficulty();
+
+
     friend class MainWindow;
 
 };

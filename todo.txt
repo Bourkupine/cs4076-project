@@ -1,5 +1,7 @@
+Problems:
+	cant add more than one ingredient to a recipe
+
 Recipe:
-	dont allow dupes
 
 View Recipe:
 	have a button beside search that opens the advanced search options -> allergies, 
@@ -54,44 +56,33 @@ Inheritance:
 
 
   QMenu 
-  QCheckBox 
-  QRadioButton 
-  QSlider 
-  QGridLayout 
-  QBoxLayout
+X QCheckBox 
+X QRadioButton 
+X QSlider 
+X QGridLayout 
+X QBoxLayout
 
 
-  Virtual functions
+X Virtual functions
   template classes
   Multiple inheritance
   namespaces
   Programmer defined exceptions
   Unions
 X Operator overloading
-  Abstract classes
+X Abstract classes
 X Copy constructors (deep , shallow copy)
   Bit structures				//bit map of vegan/vegetarian
 X Advanced pre-processor directives
   C++ Object Construction Sequence
 X Initializer List
-  C++ References
+X C++ References
 X Pointers					
-  Inheritance
+X Inheritance
 X Destructors
 X Memory management
-  Header files (inclusion guards)
+X Header files (inclusion guards)
   Arrays and pointers
 X Friendship
 X Global variables
-  Private, Public, Protected
-
-
-
-
-Recipe name
-Bool fav
-QString instructions
-Ingredients
-Difficulty
-Int Makes
-Int Time
+X Private, Public, Protected

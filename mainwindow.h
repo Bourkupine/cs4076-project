@@ -5,6 +5,7 @@
 #include <algorithm>
 
 #include "qlistwidget.h"
+
 #include "recipe.h"
 
 QT_BEGIN_NAMESPACE
@@ -51,10 +52,11 @@ private slots:
 private:
     Ui::MainWindow *ui;
     map<QString, bool> allergies;
-    vector<Ingredient> ingredients;
-    vector<Ingredient> searchIngredients;
+    vector<Ingredient*> ingredients;
+    vector<Ingredient*> searchIngredients;
     map<QString, bool> tempAllergies;
-    vector<Recipe::IngAndAm> tempStruct;
+    //vector<Recipe::LiqAndAm> tempStruct;
+    vector<IngredientAmount> tempStruct; //temp fix for above
     void populateMap();
 };
 #endif // MAINWINDOW_H

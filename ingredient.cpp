@@ -2,25 +2,28 @@
 
 Ingredient::Ingredient(){}
 
-Ingredient::Ingredient(int cal, QString name, map<QString, bool> allergies) {
-    this->cal = cal;
+Ingredient::Ingredient(QString name, map<QString, bool> allergies) {
     this->name = name;
     this->allergies = allergies;
 }
 Ingredient::Ingredient(const Ingredient &ingredient) {
-    cal = ingredient.cal;
     name = ingredient.name;
     allergies = ingredient.allergies;
-}
-
-
-int Ingredient::getCal() { //maybe make this const
-    return cal;
 }
 
 QString Ingredient::getName() {
     return name;
 }
+Ingredient::~Ingredient() {};
+
+
+void Ingredient::setName(QString s) {
+    this->name = s;
+}
+void Ingredient::setAllergies(map<QString, bool> m) {
+    this->allergies = m;
+}
+
 
 map<QString, bool>& Ingredient::getAllergies() {
     return allergies;
