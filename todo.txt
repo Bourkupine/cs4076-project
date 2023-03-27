@@ -31,13 +31,6 @@ Add Ingredient:
 	reset calorie amount
 	instead of adding it based off when an ingredient is selected, after clicking button, check the state of the ingedients
 
-
-Virtual Inheritance:
-	different types of ingredients
-		-liquids... etc...
-	which would have their own properties such as type of measurement (ml/g)
-	Vegan option
-
 Bit Map:
 	0 or 1 value for something.
 	00100110, each bit represents something (maps to it)
@@ -51,7 +44,6 @@ Union:
 	01101100 -> 0110//1100
 
 Inheritance:
-	Liquid/Solid (ml/gram)
 	Write to CSV
 
 

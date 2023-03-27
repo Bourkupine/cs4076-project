@@ -352,24 +352,24 @@ void MainWindow::on_searchIngredientButton_clicked() //creates a duplicate for s
 {
     QString search = ui->searchIngredientName->text();
 
+    //clear otherwise it creates dupes (since we are adding inside the second for loop)
     ui->listOfIngredients->clear();
 
-    //REFACTOR THIS
+    for(Ingredient *i : ingredients) {
+        QString ingName = i->getName();
 
-//    for(Ingredient i : ingredients) {
-//        QString iName = i.getName();
+        //if the ingredient contains your search, add it to the searchIngredient vector
+        if(ingName.contains(search)) {
+            searchIngredients.push_back(i);
+        }
+    }
 
-//        if (iName.contains(search)) {
-//            searchIngredients.push_back(i);
-//        }
+    //loop through searchIngredients and add them into the QListWidget
+    for(Ingredient *i : searchIngredients) {
+        ui->listOfIngredients->addItem(i->getName());
+    }
 
-//    }
-//    for(Ingredient i : searchIngredients) {
-
-//        ui->listOfIngredients->addItem(i.getName());
-
-//    }
-
+    //clear searchIngredients so it gets reset each time
     searchIngredients.clear();
 }
 
