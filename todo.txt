@@ -46,6 +46,16 @@ Union:
 Inheritance:
 	Write to CSV
 
+Templates:
+
+Search functions: If you have any search functions that search for ingredients or recipes based on certain criteria, you could make these functions template functions so that they can work with different types of data.
+
+Unit conversion: You could create a template function that can convert between different units of measurement (e.g. grams to ounces), and use it in the Ingredient or Recipe classes to convert ingredient amounts to a consistent unit.
+
+Sorting: You could create a template function that can sort a container of ingredients or recipes based on various criteria (e.g. alphabetical order, calorie count), allowing for flexible sorting options.
+
+Output formatting: You could create a template function or class that can format the output of various data types (e.g. ingredients, recipes) in a customizable way, such as outputting them in a specific order or formatting them as a table.
+
 
   QMenu 
 X QCheckBox 
@@ -66,7 +76,7 @@ X Abstract classes
 X Copy constructors (deep , shallow copy)
   Bit structures				//bit map of vegan/vegetarian
 X Advanced pre-processor directives
-  C++ Object Construction Sequence
+X C++ Object Construction Sequence
 X Initializer List
 X C++ References
 X Pointers					

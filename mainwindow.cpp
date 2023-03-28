@@ -31,6 +31,7 @@ MainWindow::MainWindow(QWidget *parent)
     }
 }
 
+//operator overloading
 void operator<<(std::map<QString, bool>& map, const QString& key) {
     map[key] = false;
 }
@@ -47,8 +48,12 @@ void MainWindow::populateMap() {
 
 MainWindow::~MainWindow()
 {
+    //memory management
     for(Recipe * r : recipes) {
         delete r;
+    }
+    for(Ingredient *i : ingredients) {
+        delete i;
     }
     delete ui;
 }
@@ -285,6 +290,29 @@ void MainWindow::on_viewIngredient_clicked()
 
     //REFACTOR THIS
 
+    for(Ingredient *i : ingredients) {
+        //if ingredient name = item text then we have the igredient
+        if(i->getName() == item->text()) {
+            //set current page to inspect ingredient
+            ui->stackedWidget->setCurrentIndex(1);
+
+
+            ui->inspectIngredientName->setText(i->getName());
+            ui->inspectIngredientUnit->setText(i->getType());
+            //ui->inspectIngredientType->setText()
+
+            for(auto const &p : i->getAllergies()) {
+                if(p.second == true) {
+                    QListWidgetItem *item = new QListWidgetItem;
+                    item->setText(p.first);
+                    ui->inspectIngredientAllergies->addItem(item);
+                }
+            }
+
+
+        }
+    }
+
 //    for(Ingredient i : ingredients) {
 //        if(i.getName() == item->text()) {
 
@@ -371,5 +399,11 @@ void MainWindow::on_searchIngredientButton_clicked() //creates a duplicate for s
 
     //clear searchIngredients so it gets reset each time
     searchIngredients.clear();
+}
+
+//dynamic typing
+void MainWindow::on_searchIngredientName_textChanged(const QString &arg1)
+{
+    MainWindow::on_searchIngredientButton_clicked();
 }
 

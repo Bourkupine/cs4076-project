@@ -49,6 +49,8 @@ private slots:
 
     void on_searchIngredientButton_clicked();
 
+    void on_searchIngredientName_textChanged(const QString &arg1);
+
 private:
     Ui::MainWindow *ui;
     map<QString, bool> allergies;

@@ -55,7 +55,7 @@
       <item>
        <widget class="QStackedWidget" name="stackedWidget">
         <property name="currentIndex">
-         <number>5</number>
+         <number>2</number>
         </property>
         <widget class="QWidget" name="viewRecipe">
          <widget class="QWidget" name="gridLayoutWidget_6">
@@ -231,20 +231,10 @@
              </property>
             </widget>
            </item>
-           <item row="2" column="1" colspan="2">
-            <widget class="QLineEdit" name="inspectIngredientUnit">
-             <property name="maximumSize">
-              <size>
-               <width>80</width>
-               <height>16777215</height>
-              </size>
-             </property>
-            </widget>
-           </item>
            <item row="1" column="0" alignment="Qt::AlignRight">
             <widget class="QLabel" name="label_13">
              <property name="text">
-              <string>Calories: </string>
+              <string>Type: </string>
              </property>
             </widget>
            </item>
@@ -263,7 +253,7 @@
             </widget>
            </item>
            <item row="1" column="1" colspan="2">
-            <widget class="QLineEdit" name="inspectIngredientCal">
+            <widget class="QLineEdit" name="inspectIngredientType">
              <property name="maximumSize">
               <size>
                <width>80</width>
@@ -294,6 +284,16 @@
               </size>
              </property>
             </spacer>
+           </item>
+           <item row="2" column="1" colspan="2">
+            <widget class="QLineEdit" name="inspectIngredientUnit">
+             <property name="maximumSize">
+              <size>
+               <width>40</width>
+               <height>16777215</height>
+              </size>
+             </property>
+            </widget>
            </item>
           </layout>
          </widget>
@@ -829,7 +829,7 @@ QRadioButton:unchecked{
             <height>481</height>
            </rect>
           </property>
-          <layout class="QGridLayout" name="gridLayout_3" rowstretch="0,0,0,0,0,0" columnstretch="1,2,2,2,2">
+          <layout class="QGridLayout" name="gridLayout_3" rowstretch="0,0,0,0,0" columnstretch="1,2,2,2">
            <property name="sizeConstraint">
             <enum>QLayout::SetMinimumSize</enum>
            </property>
@@ -898,7 +898,7 @@ QRadioButton:unchecked{
                </property>
               </widget>
              </item>
-             <item alignment="Qt::AlignRight">
+             <item alignment="Qt::AlignLeft">
               <widget class="QRadioButton" name="isLiquid">
                <property name="text">
                 <string/>
@@ -912,7 +912,7 @@ QRadioButton:unchecked{
                </property>
               </widget>
              </item>
-             <item alignment="Qt::AlignRight">
+             <item alignment="Qt::AlignLeft">
               <widget class="QRadioButton" name="isSolid">
                <property name="text">
                 <string/>
