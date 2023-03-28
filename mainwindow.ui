@@ -55,7 +55,7 @@
       <item>
        <widget class="QStackedWidget" name="stackedWidget">
         <property name="currentIndex">
-         <number>2</number>
+         <number>1</number>
         </property>
         <widget class="QWidget" name="viewRecipe">
          <widget class="QWidget" name="gridLayoutWidget_6">
@@ -256,7 +256,7 @@
             <widget class="QLineEdit" name="inspectIngredientType">
              <property name="maximumSize">
               <size>
-               <width>80</width>
+               <width>50</width>
                <height>16777215</height>
               </size>
              </property>
@@ -289,7 +289,7 @@
             <widget class="QLineEdit" name="inspectIngredientUnit">
              <property name="maximumSize">
               <size>
-               <width>40</width>
+               <width>20</width>
                <height>16777215</height>
               </size>
              </property>

@@ -285,22 +285,20 @@ void MainWindow::on_viewIngredient_clicked()
     QListWidgetItem *item = ui->listOfIngredients->currentItem();
     ui->inspectIngredientAllergies->clear();
 
-
-    //Ingredient i = getIngredientFromItem(item);
-
-    //REFACTOR THIS
-
     for(Ingredient *i : ingredients) {
         //if ingredient name = item text then we have the igredient
         if(i->getName() == item->text()) {
             //set current page to inspect ingredient
             ui->stackedWidget->setCurrentIndex(1);
 
-
+            //set variables in the page to equal the current Ingredient
             ui->inspectIngredientName->setText(i->getName());
             ui->inspectIngredientUnit->setText(i->getType());
-            //ui->inspectIngredientType->setText()
 
+            QString iClass = i->getType() == "g" ? "Solid" : "Liquid";
+            ui->inspectIngredientType->setText(iClass);
+
+            //loop through and add its allergies
             for(auto const &p : i->getAllergies()) {
                 if(p.second == true) {
                     QListWidgetItem *item = new QListWidgetItem;
@@ -312,30 +310,6 @@ void MainWindow::on_viewIngredient_clicked()
 
         }
     }
-
-//    for(Ingredient i : ingredients) {
-//        if(i.getName() == item->text()) {
-
-
-//            //set current page to inspect ingredient
-//            ui->stackedWidget->setCurrentIndex(1);
-
-//            //get ingredients info
-//            ui->inspectIngredientName->setText(i.getName());
-//            //not implemented yet ui->inspectIngredientUnit->setText();
-
-//            //loop through allergies and add the allgeries
-//            for(auto const &p : i.getAllergies()) {
-//                if(p.second == true) {
-//                    QListWidgetItem *item = new QListWidgetItem;
-//                    item->setText(p.first);
-//                    //add allergies to the inspect ingredient allergy list
-//                    ui->inspectIngredientAllergies->addItem(item);
-//                }
-//            }
-
-//        }
-//    }
 
 }
 
