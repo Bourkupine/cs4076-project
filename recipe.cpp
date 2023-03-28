@@ -1,13 +1,15 @@
 #include "recipe.h"
 
-Recipe::Recipe(QString name, bool fav, int makes, int time, QString instructions, vector<IngredientAmount> ingredientAmount, map<QString, bool> allergies) {
+Recipe::Recipe(QString name,int diff, bool fav, int makes, int time, QString instructions, vector<IngredientAmount> ingredientAmount, map<QString, bool> allergies, DietaryUnion dietary) {
     this->name = name;
+    this->difficulty = diff;
     this->fav = fav;
     this->makes = makes;
     this->time = time;
     this->instructions = instructions;
     this->ingredientAmount = ingredientAmount;
     this->allergies = allergies;
+    this->dietaryUnion = dietary;
 
     calcAllergies();
 }

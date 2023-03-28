@@ -21,8 +21,6 @@ set(PROJECT_SOURCES
         ingredient.h
         recipe.h
         recipe.cpp
-        popup.h
-        popup.cpp
         liquid.h
         liquid.cpp
         solid.h
@@ -31,6 +29,9 @@ set(PROJECT_SOURCES
         ingredientamount.cpp
         customexception.h
         customexception.cpp
+        popup.h
+        popup.cpp
+        popup.ui
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

@@ -110,60 +110,43 @@ void MainWindow::on_createRecipe_clicked() //create a recipe
     bool fav = ui->createRecipeFav->isChecked();
     int time = ui->createRecipeTime->value();
     QString instructions = ui->createRecipeInstructions->toPlainText();
-    //tempIngredientAmount
-    //tempAllgeries
 
-    //fill ingredients //this will be done when addIngredient button is clicked
-    //fill allergies
+    //dietry union
+    Recipe::DietaryUnion un;
 
+    if(ui->createRecipeVegan->isChecked()) {
+        un.dietary = 2;
+    } else if(ui->createRecipeVegetarian->isChecked()) {
+        un.dietary = 1;
+    } else {
+        un.dietary = 0;
+    }
+
+    //get Difficulty
+    int diff = ui->createRecipeEasy->isChecked() ? 0 : (ui->createRecipeMedium->isChecked() ? 1 : 2);
 
     //create recipe
-    Recipe *r = new Recipe(recipeName, fav, makes, time, instructions, tempIngredientAmount, tempAllergies);
+    Recipe *r = new Recipe(recipeName, diff, fav, makes, time, instructions, tempIngredientAmount, tempAllergies, un);
+
     //add to recipe vector and add to list
     recipes.insert(recipes.end(), r);
     ui->listOfRecipes->addItem(recipeName);
 
     //reset fields
-        ui->createRecipeName->setText("");
-        ui->createRecipeMakes->setValue(0);
-        ui->createRecipeFav->setCheckState(Qt::Unchecked);
-        ui->createRecipeTime->setValue(0);
-        ui->createRecipeInstructions->setText("");
+    ui->createRecipeName->setText("");
+    ui->createRecipeMakes->setValue(0);
+    ui->createRecipeFav->setCheckState(Qt::Unchecked);
+    ui->createRecipeTime->setValue(0);
+    ui->createRecipeInstructions->setText("");
+    ui->createRecipeVegan->setCheckState(Qt::Unchecked);
+    ui->createRecipeVegetarian->setCheckState(Qt::Unchecked);
 
-        tempAllergies.clear();
+    tempAllergies.clear();
 
-        for(int row = 0; row < ui->createRecipeIngredients->count(); row++) { //might need to use size() instead of count()
-            QListWidgetItem *item = ui->createRecipeIngredients->item(row);
-            item->setHidden(false);
-        }
-
-
-
-    //REFACTOR THIS
-//    for(int i = 0; i < tempStruct.size(); i++) {
-//        //Recipe::IngAndAm temp(*tempStruct.at(i).ingredient, tempStruct.at(i).amount);
-//        //tempAllergies = temp.ingredient->getAllergies();
-//        //instead loop through getAllergies and add the true ones;
-
-//        //for each allergy in ingredient tempStruct.at(i).ingredient
-//        //if allergy second = true,
-//        //and tempAllergy of allergy name = false
-//        //set allergy to true;
-
-
-//        Ingredient *ing = tempStruct.at(i).ingredient;
-
-//        //crash
-//        //map<QString, bool> all = ing->getAllergies();
-
-//        //it appears like temptStruct isnt getting filled with values
-//        //or ing isnt getting the value of tempStruct.at(i)
-//        for(auto const &p : ing->getAllergies()) {
-//            if(p.second == true) {
-//                tempAllergies[p.first] = true;
-//            }
-//        }
-//    }
+    for(int row = 0; row < ui->createRecipeIngredients->count(); row++) { //might need to use size() instead of count()
+        QListWidgetItem *item = ui->createRecipeIngredients->item(row);
+        item->setHidden(false);
+    }
 
 }
 
@@ -180,14 +163,14 @@ void MainWindow::on_createIngredient_clicked()
     }
 
     //check if it already exists (might reimplement this as it causes a warning)
-    bool contains;
+    bool contains = false;
     for(Ingredient *i : ingredients) {
         if(i->getName()==ingredientName) {
             contains = true;
         }
     }
-    //CONTAINS NOT INCLUDED
-    if (!ingredientName.isEmpty()) {
+
+    if (!ingredientName.isEmpty() && !contains) {
         Ingredient *i;
         if(ui->isLiquid->isChecked()) {
             i = new Liquid("ml");
@@ -230,53 +213,55 @@ void MainWindow::on_inspectIngredientEdit_clicked()
 
     QString name = ui->inspectIngredientName->text();
 
+    //find ingredient
     for(Ingredient *i : ingredients) {
         if(i->getName() == name) {
+            //set name to ingredients name
             ui->lineEdit_2->setText(name);
 
-            //NOT WORKING
+            //get type and check the corresponding radio button
             if (i->getType() == "g") {
-                ui->isLiquid->setChecked(false);
                 ui->isSolid->setChecked(true);
             }
             else {
-                ui->isSolid->setChecked(false);
-                ui->isLiquid->setCheckable(true);
+                ui->isLiquid->setChecked(true);
             }
 
+            map<QString, bool> m = i->getAllergies();
 
+            //not finished
         }
     }
 
     //REFACTOR THIS
 
-//    for(Ingredient i : ingredients) {
-//        if(i.getName() == name) {
+    //    for(Ingredient i : ingredients) {
+    //        if(i.getName() == name) {
 
-//            ui->lineEdit_2->setText(name);
+    //            ui->lineEdit_2->setText(name);
 
-//            map<QString, bool> m = i.getAllergies();
-//            //not working
-//            //its adds all, instead set ticks to be the true ones
+    //            map<QString, bool> m = i.getAllergies();
+    //            //not working
+    //            //its adds all, instead set ticks to be the true ones
 
-//            //for each allergy in viewAllergies
-//            //if it is in i.getAllergies then
-//            //set checkstate to true
-//            for(int j = 0; j < ui->viewAllergies->count(); j++) {
+    //            //for each allergy in viewAllergies
+    //            //if it is in i.getAllergies then
+    //            //set checkstate to true
+    //            for(int j = 0; j < ui->viewAllergies->count(); j++) {
 
-//                if(ui->viewAllergies->item(j) /*something*/) {}
-//            }
+    //                if(ui->viewAllergies->item(j) /*something*/) {}
+    //            }
 
-////            for(auto const &p : i.getAllergies()) {
-////                if(p.second == true) {
-////                    //add allergies to the inspect ingredient allergy list
-////                    ui->viewAllergies->currentItem()->setCheckState(Qt::Checked);
-////                }
-////            }
+    ////            for(auto const &p : i.getAllergies()) {
+    ////                if(p.second == true) {
+    ////                    //add allergies to the inspect ingredient allergy list
+    ////                    ui->viewAllergies->currentItem()->setCheckState(Qt::Checked);
+    ////                }
+    ////            }
 
 
-//        }
-//    }
+    //        }
+    //    }
 
     //fill in values with current one
 
@@ -286,6 +271,27 @@ void MainWindow::on_inspectIngredientEdit_clicked()
 //call deconstructor?? remove from array and all other places
 void MainWindow::on_inspectIngredientDelete_clicked()
 {
+    bool b = false;
+    bool *bp = &b;
+
+    Popup *p = new Popup("Are you sure you want to delete", bp);
+
+    p->setModal(true);
+    p->exec();
+    delete p;
+
+    if(b) {
+        for (Ingredient *i : ingredients) {
+            if (i->getName() == ui->inspectIngredientName->text()) {
+
+                //delete the ingredient
+                int pos;
+
+                //ingredients.erase();
+            }
+        }
+    }
+
     //create popup
     //get bool value from it
     //delete if bool value = true
@@ -294,28 +300,29 @@ void MainWindow::on_inspectIngredientDelete_clicked()
 
 void MainWindow::on_addIngredientToRecipe_clicked()
 {
-    int amount = ui->ingredientAmount->value();
-    QListWidgetItem *item = ui->createRecipeIngredients->currentItem();
+    try {
+        int amount = ui->ingredientAmount->value();
+        QListWidgetItem *item = ui->createRecipeIngredients->currentItem();
 
-    //debugger notes:
-        //can get ingredient name and item name
-        //they are the same
+        for (Ingredient *i : ingredients) {
 
-    for (Ingredient *i : ingredients) {
+            if (i->getName() == item->text()) { //error because if ingredient is blank it has no name
+                //i is the ingredient we want
 
-        if (i->getName() == item->text()) {
-            //i is the ingredient we want
-
-            IngredientAmount ia(i, amount);
-            tempIngredientAmount.insert(tempIngredientAmount.end(), ia);
-            item->setHidden(true);
-            ui->actualRecipeIngredients->addItem(item->text());
-            break;
-
+                IngredientAmount ia(i, amount);
+                tempIngredientAmount.insert(tempIngredientAmount.end(), ia);
+                item->setHidden(true);
+                ui->actualRecipeIngredients->addItem(item->text());
+                break;
+            }
         }
 
+        ui->ingredientAmount->setValue(0);
+
+        throw CustomException((char *)"No Ingredient was added");
+    } catch(CustomException ce) {
+        cout << ce.what();
     }
-    ui->ingredientAmount->setValue(0);
 }
 
 
@@ -419,5 +426,11 @@ void MainWindow::on_searchIngredientButton_clicked() //creates a duplicate for s
 void MainWindow::on_searchIngredientName_textChanged(const QString &arg1)
 {
     MainWindow::on_searchIngredientButton_clicked();
+}
+
+//Vegan option also ticks vegetarian
+void MainWindow::on_createRecipeVegan_stateChanged(int arg1)
+{
+    if(arg1) ui->createRecipeVegetarian->setCheckState(Qt::Checked);
 }
 

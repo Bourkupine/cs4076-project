@@ -1,16 +1,9 @@
 General:
-	make it so certain boxes can't be edited by user
-
-Edit Ingredient:
-	tick whether its solid/liquid
+	make bool value EDITING when editing 
+	Add QMenu
 
 Inspect Recipe:
 	if editing recipe and user clicks add, then delete the old one
-
-
-Add Ingredient:
-	implement contains boolean
-
 
 View Recipe:
 	have a button beside search that opens the advanced search options -> allergies, 
@@ -21,15 +14,8 @@ View Recipe:
 	bit wise operations :"amount made" -> left shift to double amount
 
 Add Recipe:
-	Fix radio button colour
-	clear amount each time you add ingredient
-	Add favourite button
-	Add amount made
+	Clicking add ingredient when no ingredient is selected causes crash
 	Make time to make formatted for time
-	When adding ingredient, there needs to be a tickbox AND a spin box for amount:
-		[] Ingredient Name [100]g
-		Use inheritance to figure out if its grams or ml
-		make it only show amount when you select it
 	When adding ingredients users should only be able to select one ingredient at a time
 
 Inheritance:

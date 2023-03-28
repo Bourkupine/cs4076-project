@@ -1,9 +1,10 @@
 #ifndef LIQUID_H
 #define LIQUID_H
 
+#include "customexception.h"
 #include "ingredient.h"
 
-class Liquid : public Ingredient
+class Liquid : public Ingredient, CustomException
 {
 private:
     QString type;

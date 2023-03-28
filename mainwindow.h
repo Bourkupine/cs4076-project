@@ -4,16 +4,18 @@
 #include <QMainWindow>
 #include <algorithm>
 
+#include "customexception.h"
 #include "qlistwidget.h"
 
 #include "recipe.h"
+#include "popup.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 using namespace std;
 
-class MainWindow : public QMainWindow
+class MainWindow : public QMainWindow, public CustomException
 {
     Q_OBJECT
 
@@ -48,6 +50,8 @@ private slots:
     void on_searchIngredientButton_clicked();
 
     void on_searchIngredientName_textChanged(const QString &arg1);
+
+    void on_createRecipeVegan_stateChanged(int arg1);
 
 private:
     Ui::MainWindow *ui;
