@@ -95,18 +95,49 @@ void MainWindow::on_addIngredients_clicked()
 //display on recipe page
 void MainWindow::on_createRecipe_clicked() //create a recipe
 {
+    /* Recipe Has
+     * Name X
+     * Fav X
+     * Makes X
+     * Time it takes X
+     * vector of ingredientAmount
+     * Instructions X
+     * Difficulty
+     */
+
     QString recipeName = ui->createRecipeName->text();
     int makes = ui->createRecipeMakes->value();
     bool fav = ui->createRecipeFav->isChecked();
     int time = ui->createRecipeTime->value();
     QString instructions = ui->createRecipeInstructions->toPlainText();
+    //tempIngredientAmount
+    //tempAllgeries
 
-    //we need to get allergies
-    //loop through stuct
-    //get ingredient
-    //have temp allergies
-    //add allergies
-    //CRASH HERE
+    //fill ingredients //this will be done when addIngredient button is clicked
+    //fill allergies
+
+
+    //create recipe
+    Recipe *r = new Recipe(recipeName, fav, makes, time, instructions, tempIngredientAmount, tempAllergies);
+    //add to recipe vector and add to list
+    recipes.insert(recipes.end(), r);
+    ui->listOfRecipes->addItem(recipeName);
+
+    //reset fields
+        ui->createRecipeName->setText("");
+        ui->createRecipeMakes->setValue(0);
+        ui->createRecipeFav->setCheckState(Qt::Unchecked);
+        ui->createRecipeTime->setValue(0);
+        ui->createRecipeInstructions->setText("");
+
+        tempAllergies.clear();
+
+        for(int row = 0; row < ui->createRecipeIngredients->count(); row++) { //might need to use size() instead of count()
+            QListWidgetItem *item = ui->createRecipeIngredients->item(row);
+            item->setHidden(false);
+        }
+
+
 
     //REFACTOR THIS
 //    for(int i = 0; i < tempStruct.size(); i++) {
@@ -134,25 +165,6 @@ void MainWindow::on_createRecipe_clicked() //create a recipe
 //        }
 //    }
 
-
-    Recipe *r = new Recipe(recipeName, fav, makes, time, instructions, tempStruct, tempAllergies);
-    recipes.insert(recipes.end(), r);
-    ui->listOfRecipes->addItem(recipeName);
-
-    //reset fields
-    ui->createRecipeName->setText("");
-    ui->createRecipeMakes->setValue(0);
-    ui->createRecipeFav->setCheckState(Qt::Unchecked);
-    ui->createRecipeTime->setValue(0);
-    ui->createRecipeInstructions->setText("");
-
-    tempAllergies.clear();
-
-    for(int row = 0; row < ui->createRecipeIngredients->count(); row++) { //might need to use size() instead of count()
-        QListWidgetItem *item = ui->createRecipeIngredients->item(row);
-        item->setHidden(false);
-    }
-
 }
 
 void MainWindow::on_createIngredient_clicked()
@@ -174,8 +186,8 @@ void MainWindow::on_createIngredient_clicked()
             contains = true;
         }
     }
-
-    if (!ingredientName.isEmpty() && !contains) {
+    //CONTAINS NOT INCLUDED
+    if (!ingredientName.isEmpty()) {
         Ingredient *i;
         if(ui->isLiquid->isChecked()) {
             i = new Liquid("ml");
@@ -218,6 +230,23 @@ void MainWindow::on_inspectIngredientEdit_clicked()
 
     QString name = ui->inspectIngredientName->text();
 
+    for(Ingredient *i : ingredients) {
+        if(i->getName() == name) {
+            ui->lineEdit_2->setText(name);
+
+            //NOT WORKING
+            if (i->getType() == "g") {
+                ui->isLiquid->setChecked(false);
+                ui->isSolid->setChecked(true);
+            }
+            else {
+                ui->isSolid->setChecked(false);
+                ui->isLiquid->setCheckable(true);
+            }
+
+
+        }
+    }
 
     //REFACTOR THIS
 
@@ -257,7 +286,9 @@ void MainWindow::on_inspectIngredientEdit_clicked()
 //call deconstructor?? remove from array and all other places
 void MainWindow::on_inspectIngredientDelete_clicked()
 {
-
+    //create popup
+    //get bool value from it
+    //delete if bool value = true
 }
 
 
@@ -270,17 +301,21 @@ void MainWindow::on_addIngredientToRecipe_clicked()
         //can get ingredient name and item name
         //they are the same
 
+    for (Ingredient *i : ingredients) {
 
-    for(Ingredient *i : ingredients) {
-        string iName = i->getName().QString::toStdString();
-        string itemName = item->text().toStdString();
-//        if (iName == itemName) {
-//            tempStruct.insert(tempStruct.end(), *new Recipe::IngAndAm(i, amount));
-//            item->setHidden(true);
-//            ui->actualRecipeIngredients->addItem(item -> text());
-//            break;
-//        }
+        if (i->getName() == item->text()) {
+            //i is the ingredient we want
+
+            IngredientAmount ia(i, amount);
+            tempIngredientAmount.insert(tempIngredientAmount.end(), ia);
+            item->setHidden(true);
+            ui->actualRecipeIngredients->addItem(item->text());
+            break;
+
+        }
+
     }
+    ui->ingredientAmount->setValue(0);
 }
 
 

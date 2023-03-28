@@ -1,7 +1,16 @@
-Problems:
-	cant add more than one ingredient to a recipe
+General:
+	make it so certain boxes can't be edited by user
 
-Recipe:
+Edit Ingredient:
+	tick whether its solid/liquid
+
+Inspect Recipe:
+	if editing recipe and user clicks add, then delete the old one
+
+
+Add Ingredient:
+	implement contains boolean
+
 
 View Recipe:
 	have a button beside search that opens the advanced search options -> allergies, 
@@ -13,6 +22,7 @@ View Recipe:
 
 Add Recipe:
 	Fix radio button colour
+	clear amount each time you add ingredient
 	Add favourite button
 	Add amount made
 	Make time to make formatted for time

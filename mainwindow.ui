@@ -55,7 +55,7 @@
       <item>
        <widget class="QStackedWidget" name="stackedWidget">
         <property name="currentIndex">
-         <number>1</number>
+         <number>3</number>
         </property>
         <widget class="QWidget" name="viewRecipe">
          <widget class="QWidget" name="gridLayoutWidget_6">
@@ -215,7 +215,11 @@
             </widget>
            </item>
            <item row="0" column="1" colspan="2">
-            <widget class="QLineEdit" name="inspectIngredientName"/>
+            <widget class="QLineEdit" name="inspectIngredientName">
+             <property name="readOnly">
+              <bool>true</bool>
+             </property>
+            </widget>
            </item>
            <item row="5" column="1">
             <widget class="QPushButton" name="inspectIngredientEdit">
@@ -260,6 +264,9 @@
                <height>16777215</height>
               </size>
              </property>
+             <property name="readOnly">
+              <bool>true</bool>
+             </property>
             </widget>
            </item>
            <item row="3" column="1" colspan="2">
@@ -292,6 +299,9 @@
                <width>20</width>
                <height>16777215</height>
               </size>
+             </property>
+             <property name="readOnly">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
@@ -379,12 +389,20 @@
              <item>
               <widget class="QRadioButton" name="createRecipeEasy">
                <property name="styleSheet">
-                <string notr="true">QRadioButton:checked{
-    color: green;
+                <string notr="true">QRadioButton::indicator {
+    width:                  10px;
+    height:                 10px;
+    border-radius:          7px;
 }
 
-QRadioButton:unchecked{
-   color: grey;
+QRadioButton::indicator:checked {
+    background-color:       green;
+    border:                 2px solid white;
+}
+
+QRadioButton::indicator:unchecked {
+    background-color:       grey;
+    border:                 2px solid white;
 }</string>
                </property>
                <property name="text">
@@ -395,12 +413,20 @@ QRadioButton:unchecked{
              <item>
               <widget class="QRadioButton" name="createRecipeMedium">
                <property name="styleSheet">
-                <string notr="true">QRadioButton:checked{
-    color: orange;
+                <string notr="true">QRadioButton::indicator {
+    width:                  10px;
+    height:                 10px;
+    border-radius:          7px;
 }
 
-QRadioButton:unchecked{
-   color: grey;
+QRadioButton::indicator:checked {
+    background-color:       orange;
+    border:                 2px solid white;
+}
+
+QRadioButton::indicator:unchecked {
+    background-color:       grey;
+    border:                 2px solid white;
 }</string>
                </property>
                <property name="text">
@@ -411,12 +437,20 @@ QRadioButton:unchecked{
              <item>
               <widget class="QRadioButton" name="createRecipeHard">
                <property name="styleSheet">
-                <string notr="true">QRadioButton:checked{
-    color: red;
+                <string notr="true">QRadioButton::indicator {
+    width:                  10px;
+    height:                 10px;
+    border-radius:          7px;
 }
 
-QRadioButton:unchecked{
-   color: grey;
+QRadioButton::indicator:checked {
+    background-color:       red;
+    border:                 2px solid white;
+}
+
+QRadioButton::indicator:unchecked {
+    background-color:       grey;
+    border:                 2px solid white;
 }</string>
                </property>
                <property name="text">
@@ -474,6 +508,17 @@ QRadioButton:unchecked{
            </item>
            <item row="0" column="5" alignment="Qt::AlignRight">
             <widget class="QCheckBox" name="createRecipeFav">
+             <property name="styleSheet">
+              <string notr="true">QCheckBox::indicator:checked {
+    background-color:       orange;
+    border:                 2px solid white;
+}
+
+QCheckBox::indicator:unchecked {
+    background-color:       grey;
+    border:                 2px solid white;
+}</string>
+             </property>
              <property name="text">
               <string>Fav</string>
              </property>
@@ -612,6 +657,9 @@ QRadioButton:unchecked{
              <property name="text">
               <string>Medium</string>
              </property>
+             <property name="readOnly">
+              <bool>true</bool>
+             </property>
             </widget>
            </item>
            <item row="4" column="3">
@@ -627,6 +675,9 @@ QRadioButton:unchecked{
                <width>50</width>
                <height>16777215</height>
               </size>
+             </property>
+             <property name="readOnly">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
@@ -663,6 +714,9 @@ QRadioButton:unchecked{
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
+             <property name="readOnly">
+              <bool>true</bool>
+             </property>
             </widget>
            </item>
            <item row="1" column="0" colspan="3" alignment="Qt::AlignHCenter|Qt::AlignVCenter">
@@ -697,6 +751,9 @@ QRadioButton:unchecked{
              </property>
              <property name="text">
               <string>11:11</string>
+             </property>
+             <property name="readOnly">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
@@ -753,6 +810,9 @@ QRadioButton:unchecked{
              <property name="text">
               <string/>
              </property>
+             <property name="readOnly">
+              <bool>true</bool>
+             </property>
             </widget>
            </item>
            <item row="0" column="5" alignment="Qt::AlignRight">
@@ -765,6 +825,9 @@ QRadioButton:unchecked{
              </property>
              <property name="text">
               <string>Fav</string>
+             </property>
+             <property name="checkable">
+              <bool>false</bool>
              </property>
             </widget>
            </item>
@@ -936,7 +999,7 @@ QRadioButton:unchecked{
      <x>0</x>
      <y>0</y>
      <width>808</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
   </widget>

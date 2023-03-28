@@ -33,9 +33,7 @@ private slots:
 
     void on_createRecipe_clicked();
 
-
     void on_createIngredient_clicked();
-
 
     void on_inspectIngredientEdit_clicked();
 
@@ -57,8 +55,7 @@ private:
     vector<Ingredient*> ingredients;
     vector<Ingredient*> searchIngredients;
     map<QString, bool> tempAllergies;
-    //vector<Recipe::LiqAndAm> tempStruct;
-    vector<IngredientAmount> tempStruct; //temp fix for above
+    vector<IngredientAmount> tempIngredientAmount;
     void populateMap();
 };
 #endif // MAINWINDOW_H
