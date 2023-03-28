@@ -22,27 +22,6 @@ Add Recipe:
 		make it only show amount when you select it
 	When adding ingredients users should only be able to select one ingredient at a time
 
-
-View Ingredient:
-	search functionality
-
-Add Ingredient:
-	reset allergies check boxes
-	reset calorie amount
-	instead of adding it based off when an ingredient is selected, after clicking button, check the state of the ingedients
-
-Bit Map:
-	0 or 1 value for something.
-	00100110, each bit represents something (maps to it)
-	00 for vegan and vegetarian
-	use bitset	
-		vegetarian = 1 << 0
-		vegan = 1 << 1;
-
-Union:
-	store the amount using union (double d, int i) 
-	01101100 -> 0110//1100
-
 Inheritance:
 	Write to CSV
 
@@ -70,11 +49,11 @@ X Virtual functions
   Multiple inheritance
   namespaces
   Programmer defined exceptions
-  Unions
+X Unions
 X Operator overloading
 X Abstract classes
 X Copy constructors (deep , shallow copy)
-  Bit structures				//bit map of vegan/vegetarian
+X Bit structures				//bit map of vegan/vegetarian
 X Advanced pre-processor directives
 X C++ Object Construction Sequence
 X Initializer List

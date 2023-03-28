@@ -167,10 +167,15 @@ void MainWindow::on_createIngredient_clicked()
             temp[item->text()] = true;
     }
 
+    //check if it already exists (might reimplement this as it causes a warning)
+    bool contains;
+    for(Ingredient *i : ingredients) {
+        if(i->getName()==ingredientName) {
+            contains = true;
+        }
+    }
 
-    //check if it doesnt exist already
-    //get map
-    if (!ingredientName.isEmpty()) {
+    if (!ingredientName.isEmpty() && !contains) {
         Ingredient *i;
         if(ui->isLiquid->isChecked()) {
             i = new Liquid("ml");
