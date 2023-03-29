@@ -10,6 +10,8 @@
 #include "recipe.h"
 #include "popup.h"
 
+#include "csvhandler.h"
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -53,11 +55,24 @@ private slots:
 
     void on_createRecipeVegan_stateChanged(int arg1);
 
+    void on_action_Quit_triggered();
+
+    void on_searchForRecipe_clicked();
+
+    void on_searchRecipeName_textChanged(const QString &arg1);
+
+    void on_searchRecipeSlider_valueChanged(int value);
+
+    void on_searchRecipeFav_stateChanged(int arg1);
+
+    void on_actualRecipeIngredients_itemDoubleClicked(QListWidgetItem *item);
+
 private:
     Ui::MainWindow *ui;
     map<QString, bool> allergies;
     vector<Ingredient*> ingredients;
     vector<Ingredient*> searchIngredients;
+    vector<Recipe*> searchRecipes;
     map<QString, bool> tempAllergies;
     vector<IngredientAmount> tempIngredientAmount;
     void populateMap();

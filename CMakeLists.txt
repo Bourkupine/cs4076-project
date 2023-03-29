@@ -32,6 +32,8 @@ set(PROJECT_SOURCES
         popup.h
         popup.cpp
         popup.ui
+        csvhandler.h
+        csvhandler.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

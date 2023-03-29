@@ -55,6 +55,8 @@ MainWindow::~MainWindow()
     for(Ingredient *i : ingredients) {
         delete i;
     }
+    recipes.clear();
+    ingredients.clear();
     delete ui;
 }
 
@@ -142,6 +144,8 @@ void MainWindow::on_createRecipe_clicked() //create a recipe
     ui->createRecipeVegetarian->setCheckState(Qt::Unchecked);
 
     tempAllergies.clear();
+    tempIngredientAmount.clear();
+    ui->actualRecipeIngredients->clear();
 
     for(int row = 0; row < ui->createRecipeIngredients->count(); row++) { //might need to use size() instead of count()
         QListWidgetItem *item = ui->createRecipeIngredients->item(row);
@@ -287,16 +291,12 @@ void MainWindow::on_inspectIngredientDelete_clicked()
                 //delete the ingredient
                 int pos;
 
+
                 //ingredients.erase();
             }
         }
     }
-
-    //create popup
-    //get bool value from it
-    //delete if bool value = true
 }
-
 
 void MainWindow::on_addIngredientToRecipe_clicked()
 {
@@ -304,13 +304,14 @@ void MainWindow::on_addIngredientToRecipe_clicked()
         int amount = ui->ingredientAmount->value();
         QListWidgetItem *item = ui->createRecipeIngredients->currentItem();
 
+        if (item == nullptr) {throw CustomException((char *)"No Ingredient was added");}
+
         for (Ingredient *i : ingredients) {
 
-            if (i->getName() == item->text()) { //error because if ingredient is blank it has no name
+            if (i->getName() == item->text()) {
                 //i is the ingredient we want
-
                 IngredientAmount ia(i, amount);
-                tempIngredientAmount.insert(tempIngredientAmount.end(), ia);
+                tempIngredientAmount.push_back(ia);
                 item->setHidden(true);
                 ui->actualRecipeIngredients->addItem(item->text());
                 break;
@@ -319,9 +320,8 @@ void MainWindow::on_addIngredientToRecipe_clicked()
 
         ui->ingredientAmount->setValue(0);
 
-        throw CustomException((char *)"No Ingredient was added");
     } catch(CustomException ce) {
-        cout << ce.what();
+        cout << ce.what() << endl;
     }
 }
 
@@ -351,6 +351,7 @@ void MainWindow::on_viewIngredient_clicked()
                     QListWidgetItem *item = new QListWidgetItem;
                     item->setText(p.first);
                     ui->inspectIngredientAllergies->addItem(item);
+                    delete item;
                 }
             }
 
@@ -372,25 +373,29 @@ void MainWindow::on_viewRecipe_2_clicked()
             ui->stackedWidget->setCurrentIndex(4);
 
             //get recipe info
-            ui->inspectRecipeName->setText(r->getName());
-            ui->inspectRecipeInstructions->setText(r->getInstructions());
-            Qt::CheckState checkstate = r->getFav() ? Qt::Checked : Qt::Unchecked;
-            ui->inspectRecipeFav->setCheckState(checkstate);
-
             QString diff;
+
+            ui->inspectRecipeVegan->setCheckState(Qt::Unchecked);
+            ui->inspectRecipeVegetarian->setCheckState(Qt::Unchecked);
 
             switch(r->getDifficulty()) {
             case EASY : diff = "Easy"; break;
             case MEDIUM : diff = "Medium"; break;
             case HARD: diff = "Hard"; break;
-            }
+            };
 
+            if(r->dietaryUnion.bits.vegan) {ui->inspectRecipeVegan->setCheckState(Qt::Checked); ui->inspectRecipeVegetarian->setCheckState(Qt::Checked);}
+            else if(r->dietaryUnion.bits.vegetarian) ui->inspectRecipeVegetarian->setCheckState(Qt::Checked);
+            //set recipe info
+            ui->inspectRecipeName->setText(r->getName());
+            ui->inspectRecipeInstructions->setText(r->getInstructions());
+            if(r->getFav()) ui->inspectRecipeFav->setCheckState(Qt::Checked);
+            else ui->inspectRecipeFav->setCheckState(Qt::Unchecked);
             ui->inspectRecipeDifficulty->setText(diff);
             ui->inspectRecipeTime->setText(QString::number(r->getTime()));
-            ui->inspectRecipeMakes->setText(QString::number(r->getTime()));
+            ui->inspectRecipeMakes->setText(QString::number(r->getMakes()));
 
             //set ingredients
-
 
         }
     }
@@ -432,5 +437,114 @@ void MainWindow::on_searchIngredientName_textChanged(const QString &arg1)
 void MainWindow::on_createRecipeVegan_stateChanged(int arg1)
 {
     if(arg1) ui->createRecipeVegetarian->setCheckState(Qt::Checked);
+}
+
+
+void MainWindow::on_action_Quit_triggered()
+{
+    this->close();
+}
+
+
+void MainWindow::on_searchForRecipe_clicked()
+{
+
+    //get filter
+    bool favOnly = ui->searchRecipeFav->checkState();
+
+    QString search = ui->searchRecipeName->text();
+    int diff;
+
+    if (ui->searchRecipeEasy->isChecked()) diff = 0;
+    else if (ui->searchRecipeMedium->isChecked()) diff = 1;
+    else diff = 2;
+
+    ui->listOfRecipes->clear();
+
+    for(Recipe *r : recipes) {
+        QString recName = r->getName();
+
+        if(recName.contains(search)) {
+            searchRecipes.push_back(r);
+        }
+    }
+
+    for(Recipe *r : searchRecipes) {
+
+        if(favOnly) {
+            if(r->getFav() && r->getDifficulty() == diff) ui->listOfRecipes->addItem(r->getName());
+        }
+        else
+            if(r->getDifficulty() == diff) ui->listOfRecipes->addItem(r->getName());
+
+    }
+
+    searchRecipes.clear();
+
+}
+
+
+void MainWindow::on_searchRecipeName_textChanged(const QString &arg1)
+{
+    MainWindow::on_searchForRecipe_clicked();
+}
+
+
+void MainWindow::on_searchRecipeSlider_valueChanged(int value)
+{
+    ui->searchRecipeTimer->setText(QString::number(value));
+}
+
+
+void MainWindow::on_searchRecipeFav_stateChanged(int arg1)
+{
+    on_searchForRecipe_clicked();
+}
+
+
+void MainWindow::on_actualRecipeIngredients_itemDoubleClicked(QListWidgetItem *item)
+{
+    //remove from list
+    //unhide
+
+    for (Ingredient *i : ingredients) {
+        if (i->getName() == item->text()) {
+
+            //i is our ingredient
+            //now find the corresponding ingredient amount
+
+            for(int n = 0; n < tempIngredientAmount.size(); n++) {
+
+                if (tempIngredientAmount.at(n).getIngredient()->getName() == i->getName()) {
+
+                    //ia is our ingredient amount
+                    tempIngredientAmount.erase(tempIngredientAmount.begin()+n);
+
+                }
+            }
+        }
+    }
+    item->setHidden(false);
+
+
+//    int amount = ui->ingredientAmount->value();
+//    QListWidgetItem *item = ui->createRecipeIngredients->currentItem();
+
+//    if (item == nullptr) {throw CustomException((char *)"No Ingredient was added");}
+
+//    for (Ingredient *i : ingredients) {
+
+//        if (i->getName() == item->text()) {
+//            //i is the ingredient we want
+//            IngredientAmount ia(i, amount);
+//            tempIngredientAmount.push_back(ia);
+//            item->setHidden(true);
+//            ui->actualRecipeIngredients->addItem(item->text());
+//            break;
+//        }
+//    }
+
+//    ui->ingredientAmount->setValue(0);
+
 }
 

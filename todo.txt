@@ -1,6 +1,10 @@
 General:
+	~ when adding ingredients to recipes, check to see if recipe is already in
+	double click ingredients in recipesIngredientsList to remove it
 	make bool value EDITING when editing 
-	Add QMenu
+	remove ingredients from addrecipeingredients after making
+	Format time with slider
+	set slider timer to be max time of recipe (global variable maybe?)
 
 Inspect Recipe:
 	if editing recipe and user clicks add, then delete the old one
@@ -8,13 +12,9 @@ Inspect Recipe:
 View Recipe:
 	have a button beside search that opens the advanced search options -> allergies, 
 	difficulty
-	sort by favourites
-	have a horizontal slider with time
 	add allergy search
-	bit wise operations :"amount made" -> left shift to double amount
 
 Add Recipe:
-	Clicking add ingredient when no ingredient is selected causes crash
 	Make time to make formatted for time
 	When adding ingredients users should only be able to select one ingredient at a time
 
@@ -32,7 +32,7 @@ Sorting: You could create a template function that can sort a container of ingre
 Output formatting: You could create a template function or class that can format the output of various data types (e.g. ingredients, recipes) in a customizable way, such as outputting them in a specific order or formatting them as a table.
 
 
-  QMenu 
+X QMenu 
 X QCheckBox 
 X QRadioButton 
 X QSlider 
@@ -43,13 +43,13 @@ X QBoxLayout
 X Virtual functions
   template classes
   Multiple inheritance
-  namespaces
+  namespaces				//apparently easy
   Programmer defined exceptions
 X Unions
 X Operator overloading
 X Abstract classes
 X Copy constructors (deep , shallow copy)
-X Bit structures				//bit map of vegan/vegetarian
+X Bit structures				
 X Advanced pre-processor directives
 X C++ Object Construction Sequence
 X Initializer List

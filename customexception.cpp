@@ -6,14 +6,5 @@ CustomException::CustomException(char* s) {
 }
 
 char* CustomException::what() {
-    return (char*) message;
+    return message;
 }
-
-
-/*
- * try {
- * throw CustomException();
- * } catch(CustomException ce) {
- * cout << ce.what();
- * }
- */

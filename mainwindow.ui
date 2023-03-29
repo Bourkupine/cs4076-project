@@ -72,10 +72,10 @@
           </property>
           <layout class="QGridLayout" name="gridLayout_7">
            <item row="0" column="1">
-            <widget class="QLineEdit" name="lineEdit_5"/>
+            <widget class="QLineEdit" name="searchRecipeName"/>
            </item>
            <item row="0" column="2">
-            <widget class="QPushButton" name="pushButton_3">
+            <widget class="QPushButton" name="searchForRecipe">
              <property name="text">
               <string>Search</string>
              </property>
@@ -111,21 +111,72 @@
                 </widget>
                </item>
                <item>
-                <widget class="QRadioButton" name="radioButton">
+                <widget class="QRadioButton" name="searchRecipeEasy">
+                 <property name="styleSheet">
+                  <string notr="true">QRadioButton::indicator {
+    width:                  10px;
+    height:                 10px;
+    border-radius:          7px;
+}
+
+QRadioButton::indicator:checked {
+    background-color:       green;
+    border:                 2px solid white;
+}
+
+QRadioButton::indicator:unchecked {
+    background-color:       grey;
+    border:                 2px solid white;
+}</string>
+                 </property>
                  <property name="text">
                   <string/>
                  </property>
                 </widget>
                </item>
                <item>
-                <widget class="QRadioButton" name="radioButton_2">
+                <widget class="QRadioButton" name="searchRecipeMedium">
+                 <property name="styleSheet">
+                  <string notr="true">QRadioButton::indicator {
+    width:                  10px;
+    height:                 10px;
+    border-radius:          7px;
+}
+
+QRadioButton::indicator:checked {
+    background-color:       orange;
+    border:                 2px solid white;
+}
+
+QRadioButton::indicator:unchecked {
+    background-color:       grey;
+    border:                 2px solid white;
+}</string>
+                 </property>
                  <property name="text">
                   <string/>
                  </property>
                 </widget>
                </item>
                <item>
-                <widget class="QRadioButton" name="radioButton_3">
+                <widget class="QRadioButton" name="searchRecipeHard">
+                 <property name="styleSheet">
+                  <string notr="true">QRadioButton::indicator {
+    width:                  10px;
+    height:                 10px;
+    border-radius:          7px;
+}
+
+QRadioButton::indicator:checked {
+    background-color:       red;
+    border:                 2px solid white;
+}
+
+QRadioButton::indicator:unchecked {
+    background-color:       grey;
+    border:                 2px solid white;
+}</string>
+                 </property>
                  <property name="text">
                   <string/>
                  </property>
@@ -146,14 +197,14 @@
                 </widget>
                </item>
                <item>
-                <widget class="QSlider" name="horizontalSlider">
+                <widget class="QSlider" name="searchRecipeSlider">
                  <property name="orientation">
                   <enum>Qt::Horizontal</enum>
                  </property>
                 </widget>
                </item>
                <item>
-                <widget class="QLineEdit" name="lineEdit_7">
+                <widget class="QLineEdit" name="searchRecipeTimer">
                  <property name="maximumSize">
                   <size>
                    <width>35</width>
@@ -168,7 +219,18 @@
               </layout>
              </item>
              <item>
-              <widget class="QCheckBox" name="checkBox">
+              <widget class="QCheckBox" name="searchRecipeFav">
+               <property name="styleSheet">
+                <string notr="true">QCheckBox::indicator:checked {
+    background-color:       orange;
+    border:                 2px solid white;
+}
+
+QCheckBox::indicator:unchecked {
+    background-color:       grey;
+    border:                 2px solid white;
+}</string>
+               </property>
                <property name="text">
                 <string>Fav</string>
                </property>
@@ -374,7 +436,7 @@
             <height>461</height>
            </rect>
           </property>
-          <layout class="QGridLayout" name="gridLayout" rowstretch="0,0,1,1,0,0,0,0,0,0" columnstretch="1,1,1,1,1,1">
+          <layout class="QGridLayout" name="gridLayout" rowstretch="0,0,1,1,0,0,0,0,0" columnstretch="1,1,1,1,1,1">
            <property name="bottomMargin">
             <number>0</number>
            </property>
@@ -633,11 +695,11 @@ QRadioButton::indicator:unchecked {
            <rect>
             <x>30</x>
             <y>30</y>
-            <width>531</width>
+            <width>571</width>
             <height>431</height>
            </rect>
           </property>
-          <layout class="QGridLayout" name="gridLayout_5" columnstretch="0,0,0,0,0,0">
+          <layout class="QGridLayout" name="gridLayout_5" columnstretch="1,2,1,1,1,1,1,1,1">
            <property name="sizeConstraint">
             <enum>QLayout::SetDefaultConstraint</enum>
            </property>
@@ -647,17 +709,112 @@ QRadioButton::indicator:unchecked {
            <property name="spacing">
             <number>6</number>
            </property>
-           <item row="0" column="0">
-            <widget class="QLabel" name="label_15">
+           <item row="1" column="0" colspan="3" alignment="Qt::AlignHCenter|Qt::AlignVCenter">
+            <widget class="QLabel" name="label_20">
              <property name="text">
-              <string>Recipe Name:</string>
+              <string>Instructions: </string>
              </property>
              <property name="alignment">
               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
              </property>
             </widget>
            </item>
-           <item row="4" column="1">
+           <item row="1" column="4" colspan="5" alignment="Qt::AlignHCenter|Qt::AlignVCenter">
+            <widget class="QLabel" name="label_17">
+             <property name="text">
+              <string>Ingredients: </string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1" colspan="7">
+            <widget class="QLineEdit" name="inspectRecipeName">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="readOnly">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="4" colspan="5">
+            <widget class="QListWidget" name="inspectRecipeIngredients">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="8" alignment="Qt::AlignRight">
+            <widget class="QCheckBox" name="inspectRecipeFav">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QCheckBox::indicator:checked {
+    background-color:       orange;
+    border:                 2px solid white;
+}
+
+QCheckBox::indicator:unchecked {
+    background-color:       grey;
+    border:                 2px solid white;
+}</string>
+             </property>
+             <property name="text">
+              <string>Fav</string>
+             </property>
+             <property name="checkable">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="0" alignment="Qt::AlignRight">
+            <widget class="QLabel" name="label_18">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>Difficulty: </string>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="7">
+            <widget class="QLabel" name="label_16">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>Time:</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="1" alignment="Qt::AlignLeft">
             <widget class="QLineEdit" name="inspectRecipeDifficulty">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -667,7 +824,7 @@ QRadioButton::indicator:unchecked {
              </property>
              <property name="maximumSize">
               <size>
-               <width>200</width>
+               <width>50</width>
                <height>16777215</height>
               </size>
              </property>
@@ -679,74 +836,20 @@ QRadioButton::indicator:unchecked {
              </property>
             </widget>
            </item>
-           <item row="4" column="3">
-            <widget class="QLineEdit" name="inspectRecipeMakes">
+           <item row="4" column="2">
+            <widget class="QLabel" name="label_19">
              <property name="sizePolicy">
-              <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+              <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>50</width>
-               <height>16777215</height>
-              </size>
-             </property>
-             <property name="readOnly">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="5" column="0" colspan="3" alignment="Qt::AlignHCenter">
-            <widget class="QPushButton" name="pushButton">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>100</width>
-               <height>0</height>
-              </size>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>150</width>
-               <height>16777215</height>
-              </size>
              </property>
              <property name="text">
-              <string>Edit</string>
+              <string>Makes: </string>
              </property>
             </widget>
            </item>
-           <item row="3" column="0" colspan="3">
-            <widget class="QTextEdit" name="inspectRecipeInstructions">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="readOnly">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0" colspan="3" alignment="Qt::AlignHCenter|Qt::AlignVCenter">
-            <widget class="QLabel" name="label_20">
-             <property name="text">
-              <string>Instructions: </string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-             </property>
-            </widget>
-           </item>
-           <item row="4" column="5">
+           <item row="4" column="8">
             <widget class="QLineEdit" name="inspectRecipeTime">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -774,105 +877,18 @@ QRadioButton::indicator:unchecked {
              </property>
             </widget>
            </item>
-           <item row="4" column="4">
-            <widget class="QLabel" name="label_16">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
+           <item row="0" column="0">
+            <widget class="QLabel" name="label_15">
              <property name="text">
-              <string>Time:</string>
+              <string>Recipe Name:</string>
              </property>
              <property name="alignment">
               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
              </property>
             </widget>
            </item>
-           <item row="1" column="3" colspan="3" alignment="Qt::AlignHCenter|Qt::AlignVCenter">
-            <widget class="QLabel" name="label_17">
-             <property name="text">
-              <string>Ingredients: </string>
-             </property>
-            </widget>
-           </item>
-           <item row="4" column="0" alignment="Qt::AlignRight">
-            <widget class="QLabel" name="label_18">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="text">
-              <string>Difficulty: </string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="1" colspan="4">
-            <widget class="QLineEdit" name="inspectRecipeName">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>0</height>
-              </size>
-             </property>
-             <property name="text">
-              <string/>
-             </property>
-             <property name="readOnly">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="5" alignment="Qt::AlignRight">
-            <widget class="QCheckBox" name="inspectRecipeFav">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="text">
-              <string>Fav</string>
-             </property>
-             <property name="checkable">
-              <bool>false</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="4" column="2" alignment="Qt::AlignRight">
-            <widget class="QLabel" name="label_19">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="text">
-              <string>Makes: </string>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="3" colspan="3">
-            <widget class="QListWidget" name="inspectRecipeIngredients">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-            </widget>
-           </item>
-           <item row="5" column="3" colspan="3" alignment="Qt::AlignHCenter">
-            <widget class="QPushButton" name="pushButton_2">
+           <item row="5" column="4" colspan="5" alignment="Qt::AlignHCenter">
+            <widget class="QPushButton" name="inspectRecipeDelete">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                <horstretch>0</horstretch>
@@ -893,6 +909,87 @@ QRadioButton::indicator:unchecked {
              </property>
              <property name="text">
               <string>Delete</string>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="3">
+            <widget class="QLineEdit" name="inspectRecipeMakes">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>50</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="readOnly">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="0" colspan="4">
+            <widget class="QTextEdit" name="inspectRecipeInstructions">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="readOnly">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="5">
+            <layout class="QHBoxLayout" name="horizontalLayout_7">
+             <item>
+              <widget class="QCheckBox" name="inspectRecipeVegetarian">
+               <property name="text">
+                <string>Vegetarian</string>
+               </property>
+               <property name="checkable">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QCheckBox" name="inspectRecipeVegan">
+               <property name="text">
+                <string>Vegan</string>
+               </property>
+               <property name="checkable">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item row="5" column="0" colspan="4" alignment="Qt::AlignHCenter">
+            <widget class="QPushButton" name="inspectRecipeEdit">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>100</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>150</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>Edit</string>
              </property>
             </widget>
            </item>
@@ -1019,8 +1116,23 @@ QRadioButton::indicator:unchecked {
      <height>21</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menu_File">
+    <property name="title">
+     <string>&amp;File</string>
+    </property>
+    <addaction name="action_Quit"/>
+   </widget>
+   <addaction name="menu_File"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <action name="action_Quit">
+   <property name="text">
+    <string>&amp;Quit</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Q</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>
