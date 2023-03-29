@@ -3,6 +3,8 @@
 #include "liquid.h"
 #include "solid.h"
 
+#include <algorithm>
+
 //preprocessor directives
 #define EASY 0
 #define MEDIUM 1
@@ -10,6 +12,7 @@
 
 //global variable
 vector<Recipe*> recipes;
+bool editing = false;
 
 #include <iostream>
 
@@ -215,6 +218,8 @@ void MainWindow::on_inspectIngredientEdit_clicked()
     //set current window to Add Ingredient
     ui->stackedWidget->setCurrentIndex(5);
 
+    editing = true;
+
     QString name = ui->inspectIngredientName->text();
 
     //find ingredient
@@ -287,15 +292,33 @@ void MainWindow::on_inspectIngredientDelete_clicked()
     if(b) {
         for (Ingredient *i : ingredients) {
             if (i->getName() == ui->inspectIngredientName->text()) {
-
                 //delete the ingredient
+
+
+                //first remove from QListWidgets
+                for(int z = 0; z < ui->listOfIngredients->count(); z++) {
+                    QListWidgetItem* item = ui->listOfIngredients->item(z);
+                    if (item->text() == i->getName()) {
+                        //ui->listOfIngredients->removeItemWidget(item);
+                        delete item;
+                    }
+                }
+                for(int z = 0; z < ui->createRecipeIngredients->count(); z++) {
+                    QListWidgetItem* item = ui->createRecipeIngredients->item(z);
+                    if (item->text() == i->getName()) {
+                        //ui->listOfIngredients->removeItemWidget(item);
+                        delete item;
+                    }
+                }
+
                 int pos;
-
-
-                //ingredients.erase();
+                pos = distance(ingredients.begin(), std::find(ingredients.begin(), ingredients.end(), i));
+                ingredients.erase(ingredients.begin() + pos);
             }
+            ui->stackedWidget->setCurrentIndex(2);
         }
     }
+
 }
 
 void MainWindow::on_addIngredientToRecipe_clicked()
@@ -472,10 +495,10 @@ void MainWindow::on_searchForRecipe_clicked()
     for(Recipe *r : searchRecipes) {
 
         if(favOnly) {
-            if(r->getFav() && r->getDifficulty() == diff) ui->listOfRecipes->addItem(r->getName());
+            if(r->getFav() && r->getDifficulty() == diff && r->getTime() <= ui->searchRecipeSlider->value()) ui->listOfRecipes->addItem(r->getName());
         }
         else
-            if(r->getDifficulty() == diff) ui->listOfRecipes->addItem(r->getName());
+            if(r->getDifficulty() == diff && r->getTime() <= ui->searchRecipeSlider->value()) ui->listOfRecipes->addItem(r->getName());
 
     }
 
@@ -502,8 +525,19 @@ void MainWindow::on_searchRecipeFav_stateChanged(int arg1)
 }
 
 
-void MainWindow::on_actualRecipeIngredients_itemDoubleClicked(QListWidgetItem *item)
+void MainWindow::on_actionSave_triggered()
 {
+
+    for(Ingredient * i : ingredients) {
+        writeIToCSV(i->getName(), i->getAllergies(), i->getType());
+    }
+    //writeRToCSV();
+}
+
+
+void MainWindow::on_actualRecipeIngredients_itemClicked(QListWidgetItem *item)
+{
+
     //remove from list
     //unhide
 
@@ -513,38 +547,22 @@ void MainWindow::on_actualRecipeIngredients_itemDoubleClicked(QListWidgetItem *i
             //i is our ingredient
             //now find the corresponding ingredient amount
 
-            for(int n = 0; n < tempIngredientAmount.size(); n++) {
-
-                if (tempIngredientAmount.at(n).getIngredient()->getName() == i->getName()) {
-
-                    //ia is our ingredient amount
-                    tempIngredientAmount.erase(tempIngredientAmount.begin()+n);
-
+            for(int z = 0; z < ui->actualRecipeIngredients->count(); z++) {
+                QListWidgetItem* item = ui->actualRecipeIngredients->item(z);
+                if (item->text() == i->getName()) {
+                    //ui->listOfIngredients->removeItemWidget(item);
+                    delete item;
+                }
+            }
+            for(int z = 0; z < ui->createRecipeIngredients->count(); z++) {
+                QListWidgetItem* item = ui->createRecipeIngredients->item(z);
+                if (item->text() == i->getName()) {
+                    //ui->listOfIngredients->removeItemWidget(item);
+                    item->setHidden(false);
                 }
             }
         }
     }
-    item->setHidden(false);
-
-
-//    int amount = ui->ingredientAmount->value();
-//    QListWidgetItem *item = ui->createRecipeIngredients->currentItem();
-
-//    if (item == nullptr) {throw CustomException((char *)"No Ingredient was added");}
-
-//    for (Ingredient *i : ingredients) {
-
-//        if (i->getName() == item->text()) {
-//            //i is the ingredient we want
-//            IngredientAmount ia(i, amount);
-//            tempIngredientAmount.push_back(ia);
-//            item->setHidden(true);
-//            ui->actualRecipeIngredients->addItem(item->text());
-//            break;
-//        }
-//    }
-
-//    ui->ingredientAmount->setValue(0);
 
 }
 

@@ -18,7 +18,8 @@ namespace csv {
         CSVhandler();
         void writeRToCSV(QString name, int diff, bool fav, int makes, int time, QString instructions, vector<IngredientAmount> IngredientAmount, int dietary);
         void writeIToCSV(QString name, map<QString, bool>, QString type);
-        vector<string> readFromCSV();
+        vector<string> readIFromCSV();
+        vector<string> readRFromCSV();
 
     private:
         string rootPath;
