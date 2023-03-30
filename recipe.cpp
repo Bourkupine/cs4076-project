@@ -1,6 +1,6 @@
 #include "recipe.h"
 
-Recipe::Recipe(QString name,int diff, bool fav, int makes, int time, QString instructions, vector<IngredientAmount> ingredientAmount, map<QString, bool> allergies, DietaryUnion dietary) {
+Recipe::Recipe(QString name,int diff, bool fav, int makes, int time, QString instructions, vector<IngredientAmount*> ingredientAmount, map<QString, bool> allergies, DietaryUnion dietary) {
     this->name = name;
     this->difficulty = diff;
     this->fav = fav;
@@ -19,8 +19,8 @@ void Recipe::calcAllergies(){
     //get allergies and add to map
 
     //might need to change ia to pointer
-    for(IngredientAmount ia : ingredientAmount) {
-        for(auto const &iaMap : ia.getIngredient()->getAllergies()) {
+    for(IngredientAmount *ia : ingredientAmount) {
+        for(auto const &iaMap : ia->getIngredient()->getAllergies()) {
             if(iaMap.second == true && allergies[iaMap.first] == false) {
                 allergies[iaMap.first] = true;
             }
@@ -44,7 +44,7 @@ int Recipe::getTime() {
 QString Recipe::getInstructions() {
     return instructions;
 }
-vector<IngredientAmount> Recipe::getIngredientAmount() {
+vector<IngredientAmount*> Recipe::getIngredientAmount() {
     return ingredientAmount;
 }
 
@@ -54,4 +54,17 @@ map<QString, bool> Recipe::getAllergies() {
 int Recipe::getDifficulty() {
     return difficulty;
 }
+QString Recipe::operator=(const Recipe &r) {
+    QString s;
+    s.append(name + ",");
+    s.append(QString::number(fav) + ",");
+    s.append(QString::number(makes) + ",");
+    s.append(QString::number(time) + ",");
+    s.append(instructions + ",");
+    s.append(QString::number(difficulty) + ",");
+    //ingredients
+
+    return s;
+}
+
 

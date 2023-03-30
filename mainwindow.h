@@ -71,12 +71,15 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+    //list of all ingredients and allergies
     map<QString, bool> allergies;
     vector<Ingredient*> ingredients;
+    //these are used when searching for ingredients/recipes and are what are displayed
     vector<Ingredient*> searchIngredients;
     vector<Recipe*> searchRecipes;
+    //temp variables for when creating ingredients/recipes
     map<QString, bool> tempAllergies;
-    vector<IngredientAmount> tempIngredientAmount;
+    vector<IngredientAmount*> tempIngredientAmount;
     void populateMap();
 };
 #endif // MAINWINDOW_H

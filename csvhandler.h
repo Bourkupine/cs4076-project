@@ -8,6 +8,7 @@
 #include <sstream>
 #include <map>
 #include "ingredientamount.h"
+#include <QTextStream>
 
 using namespace std;
 
@@ -16,12 +17,21 @@ namespace csv {
     {
     public:
         CSVhandler();
-        void writeRToCSV(QString name, int diff, bool fav, int makes, int time, QString instructions, vector<IngredientAmount> IngredientAmount, int dietary);
-        void writeIToCSV(QString name, map<QString, bool>, QString type);
-        vector<string> readIFromCSV();
-        vector<string> readRFromCSV();
+
+        template<typename T>
+        void csvWrite(T t, QTextStream &ts);
+
+
+
+
+          //LEGACY
+//        void writeRToCSV(QString name, int diff, bool fav, int makes, int time, QString instructions, vector<IngredientAmount> IngredientAmount, int dietary);
+//        void writeIToCSV(QString name, map<QString, bool>, QString type);
+//        vector<string> readIFromCSV();
+//        vector<string> readRFromCSV();
 
     private:
+
         string rootPath;
 
     };

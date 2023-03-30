@@ -268,7 +268,7 @@ void MainWindow::on_addIngredientToRecipe_clicked()
 
             if (i->getName() == item->text()) {
                 //i is the ingredient we want
-                IngredientAmount ia(i, amount);
+                IngredientAmount *ia = new IngredientAmount(i, amount);
                 tempIngredientAmount.push_back(ia);
                 item->setHidden(true);
                 ui->actualRecipeIngredients->addItem(item->text());
@@ -324,6 +324,9 @@ void MainWindow::on_viewRecipe_2_clicked()
             //set page to inspect recipe
             ui->stackedWidget->setCurrentIndex(4);
 
+            //clear the QListWidget so dupes arent created
+            ui->inspectRecipeIngredients->clear();
+
             //get recipe info
             QString diff;
 
@@ -349,9 +352,9 @@ void MainWindow::on_viewRecipe_2_clicked()
 
             //set ingredients
 
-            for(IngredientAmount ia : r->getIngredientAmount()) {
+            for(IngredientAmount *ia : r->getIngredientAmount()) {
                 QListWidgetItem *item = new QListWidgetItem;
-                item->setText(QString::number(ia.getAmount()) + ia.getIngredient()->getType() + " | " + ia.getIngredient()->getName());
+                item->setText(QString::number(ia->getAmount()) + ia->getIngredient()->getType() + " | " + ia->getIngredient()->getName());
                 ui->inspectRecipeIngredients->addItem(item);
             }
         }
@@ -508,42 +511,51 @@ void MainWindow::on_actualRecipeIngredients_itemClicked(QListWidgetItem *item)
                     item->setCheckState(Qt::Unchecked);
                 }
             }
-        }
-    }
 
-}
-
-
-void MainWindow::on_inspectRecipeDelete_clicked()
-{
-    bool b = false;
-    bool *bp = &b;
-
-    Popup *p = new Popup("Are you sure you want to delete", bp);
-
-    p->setModal(true);
-    p->exec();
-    delete p;
-
-    if(b) {
-
-        for(Recipe *r : recipes) {
-
-            if(r->getName() == ui->inspectRecipeName->text()) {
-
-                for(int z = 0; z < ui->listOfRecipes->count(); z++) {
-                    QListWidgetItem *item = ui->listOfRecipes->item(z);
-                    if(item->text() == r->getName()) {
-                        delete item;
-                    }
+            //remove from the tempIngredientAmount vector
+            for(IngredientAmount *ia : tempIngredientAmount) {
+                if(ia->getIngredient()->getName() == i->getName()) {
+                    int pos = distance(tempIngredientAmount.begin(), std::find(tempIngredientAmount.begin(), tempIngredientAmount.end(), ia));
+                    tempIngredientAmount.erase(tempIngredientAmount.begin() + pos);
                 }
+
             }
 
-            int pos;
-            pos = distance(recipes.begin(), std::find(recipes.begin(), recipes.end(), r));
-            recipes.erase(recipes.begin() + pos);
         }
-        ui->stackedWidget->setCurrentIndex(0);
+
     }
 }
+
+void MainWindow::on_inspectRecipeDelete_clicked() {
+        bool b = false;
+        bool *bp = &b;
+
+        Popup *p = new Popup("Are you sure you want to delete", bp);
+
+        p->setModal(true);
+        p->exec();
+        delete p;
+
+        if(b) {
+
+            for(Recipe *r : recipes) {
+
+                if(r->getName() == ui->inspectRecipeName->text()) {
+
+                    for(int z = 0; z < ui->listOfRecipes->count(); z++) {
+                        QListWidgetItem *item = ui->listOfRecipes->item(z);
+                        if(item->text() == r->getName()) {
+                            delete item;
+                        }
+                    }
+                }
+
+                int pos;
+                pos = distance(recipes.begin(), std::find(recipes.begin(), recipes.end(), r));
+                recipes.erase(recipes.begin() + pos);
+            }
+            ui->stackedWidget->setCurrentIndex(0);
+        }
+    }
+
 

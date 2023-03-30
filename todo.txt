@@ -21,7 +21,7 @@ X QBoxLayout
 
 X Virtual functions
   template classes
-  Multiple inheritance
+X Multiple inheritance
 X namespaces				
 X Programmer defined exceptions
 X Unions

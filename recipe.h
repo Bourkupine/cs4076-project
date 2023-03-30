@@ -26,7 +26,7 @@ private:
     bool fav;
     int makes;
     int time;
-    vector<IngredientAmount> ingredientAmount;
+    vector<IngredientAmount*> ingredientAmount;
     QString instructions;
     QString name;
     map<QString, bool> allergies;
@@ -34,7 +34,7 @@ private:
     DietaryUnion dietaryUnion;
 
 public:
-    Recipe(QString name,int diff, bool fav, int makes, int time, QString instructions, vector<IngredientAmount> IngredientAmount, map<QString, bool> allergies, DietaryUnion dietary);
+    Recipe(QString name,int diff, bool fav, int makes, int time, QString instructions, vector<IngredientAmount*> IngredientAmount, map<QString, bool> allergies, DietaryUnion dietary);
     void calcAllergies();
 
     QString getName();
@@ -42,9 +42,11 @@ public:
     int getMakes();
     int getTime();
     QString getInstructions();
-    vector<IngredientAmount> getIngredientAmount();
+    vector<IngredientAmount*> getIngredientAmount();
     map<QString, bool> getAllergies();
     int getDifficulty();
+    QString operator=(const Recipe &r);
+
 
     friend class MainWindow;
 };
