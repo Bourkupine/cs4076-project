@@ -23,7 +23,7 @@ void CSVhandler::writeRToCSV(QString name, int diff, bool fav, int makes, int ti
         }
 
 
-        writer << name.toStdString() << std::to_string(diff) << favString << std::to_string(makes) << std::to_string(time) << instructions.toStdString()<< ingAm << std::to_string(dietary) << endl;
+        writer << name.toStdString() << std::to_string(diff) << favString << std::to_string(makes) << std::to_string(time) << instructions.toStdString()<< ingAm << std::to_string(dietary);
         writer.close();
 
 }
@@ -37,10 +37,10 @@ void CSVhandler::writeIToCSV(QString name, map<QString, bool> m, QString type) {
     string mString;
     for (const auto &p : m) {
         string b = p.second ? "true" : "false";
-        mString = mString + p.first.toStdString() + "|" + b + "%";
+        mString.append(p.first.toStdString() + "|" + b + "%");
     }
 
-    writer << name.toStdString() << "," << type.toStdString() << "," << mString << endl;
+    writer << name.toStdString() << "," << type.toStdString() << "," << mString;
     writer.close();
 
 }

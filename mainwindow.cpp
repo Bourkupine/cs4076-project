@@ -12,7 +12,6 @@
 
 //global variable
 vector<Recipe*> recipes;
-bool editing = false;
 
 #include <iostream>
 
@@ -46,7 +45,7 @@ void MainWindow::populateMap() {
     allergies<<"Peanuts";
     allergies<<"Tree nuts";
     allergies<<"Sesame";
-    allergies<<"Coconut";
+    allergies<<"Crustaceans";
 }
 
 MainWindow::~MainWindow()
@@ -72,6 +71,7 @@ MainWindow::~MainWindow()
  * 5 = add ingredient
 */
 
+
 void MainWindow::on_viewRecipes_clicked()
 {
     ui->stackedWidget->setCurrentIndex(0);
@@ -96,8 +96,7 @@ void MainWindow::on_addIngredients_clicked()
     ui->stackedWidget->setCurrentIndex(5);
 }
 
-//create a recipe object
-//display on recipe page
+//create recipe
 void MainWindow::on_createRecipe_clicked() //create a recipe
 {
     /* Recipe Has
@@ -153,10 +152,12 @@ void MainWindow::on_createRecipe_clicked() //create a recipe
     for(int row = 0; row < ui->createRecipeIngredients->count(); row++) { //might need to use size() instead of count()
         QListWidgetItem *item = ui->createRecipeIngredients->item(row);
         item->setHidden(false);
+        item->setCheckState(Qt::Unchecked);
     }
 
 }
 
+//create ingredient
 void MainWindow::on_createIngredient_clicked()
 {
     QString ingredientName = ui->lineEdit_2->text();
@@ -207,72 +208,6 @@ void MainWindow::on_createIngredient_clicked()
         item->setCheckState(Qt::Unchecked);
         ui->createRecipeIngredients->addItem(item);
     }
-
-}
-
-
-//edit an ingredient
-//send to Add ingredient but fill out boxes with current ones
-void MainWindow::on_inspectIngredientEdit_clicked()
-{
-    //set current window to Add Ingredient
-    ui->stackedWidget->setCurrentIndex(5);
-
-    editing = true;
-
-    QString name = ui->inspectIngredientName->text();
-
-    //find ingredient
-    for(Ingredient *i : ingredients) {
-        if(i->getName() == name) {
-            //set name to ingredients name
-            ui->lineEdit_2->setText(name);
-
-            //get type and check the corresponding radio button
-            if (i->getType() == "g") {
-                ui->isSolid->setChecked(true);
-            }
-            else {
-                ui->isLiquid->setChecked(true);
-            }
-
-            map<QString, bool> m = i->getAllergies();
-
-            //not finished
-        }
-    }
-
-    //REFACTOR THIS
-
-    //    for(Ingredient i : ingredients) {
-    //        if(i.getName() == name) {
-
-    //            ui->lineEdit_2->setText(name);
-
-    //            map<QString, bool> m = i.getAllergies();
-    //            //not working
-    //            //its adds all, instead set ticks to be the true ones
-
-    //            //for each allergy in viewAllergies
-    //            //if it is in i.getAllergies then
-    //            //set checkstate to true
-    //            for(int j = 0; j < ui->viewAllergies->count(); j++) {
-
-    //                if(ui->viewAllergies->item(j) /*something*/) {}
-    //            }
-
-    ////            for(auto const &p : i.getAllergies()) {
-    ////                if(p.second == true) {
-    ////                    //add allergies to the inspect ingredient allergy list
-    ////                    ui->viewAllergies->currentItem()->setCheckState(Qt::Checked);
-    ////                }
-    ////            }
-
-
-    //        }
-    //    }
-
-    //fill in values with current one
 
 }
 
@@ -348,7 +283,6 @@ void MainWindow::on_addIngredientToRecipe_clicked()
     }
 }
 
-
 //view an ingredient
 void MainWindow::on_viewIngredient_clicked()
 {
@@ -370,20 +304,15 @@ void MainWindow::on_viewIngredient_clicked()
 
             //loop through and add its allergies
             for(auto const &p : i->getAllergies()) {
-                if(p.second == true) {
-                    QListWidgetItem *item = new QListWidgetItem;
-                    item->setText(p.first);
-                    ui->inspectIngredientAllergies->addItem(item);
-                    delete item;
-                }
+                QListWidgetItem * item = new QListWidgetItem;
+                item->setText(p.first);
+                ui->inspectIngredientAllergies->addItem(item);
             }
-
 
         }
     }
 
 }
-
 
 
 void MainWindow::on_viewRecipe_2_clicked()
@@ -420,6 +349,11 @@ void MainWindow::on_viewRecipe_2_clicked()
 
             //set ingredients
 
+            for(IngredientAmount ia : r->getIngredientAmount()) {
+                QListWidgetItem *item = new QListWidgetItem;
+                item->setText(QString::number(ia.getAmount()) + ia.getIngredient()->getType() + " | " + ia.getIngredient()->getName());
+                ui->inspectRecipeIngredients->addItem(item);
+            }
         }
     }
 }
@@ -436,7 +370,7 @@ void MainWindow::on_searchIngredientButton_clicked() //creates a duplicate for s
         QString ingName = i->getName();
 
         //if the ingredient contains your search, add it to the searchIngredient vector
-        if(ingName.contains(search)) {
+        if(ingName.toLower().contains(search.toLower())) {
             searchIngredients.push_back(i);
         }
     }
@@ -487,7 +421,7 @@ void MainWindow::on_searchForRecipe_clicked()
     for(Recipe *r : recipes) {
         QString recName = r->getName();
 
-        if(recName.contains(search)) {
+        if(recName.toLower().contains(search.toLower())) {
             searchRecipes.push_back(r);
         }
     }
@@ -515,7 +449,19 @@ void MainWindow::on_searchRecipeName_textChanged(const QString &arg1)
 
 void MainWindow::on_searchRecipeSlider_valueChanged(int value)
 {
-    ui->searchRecipeTimer->setText(QString::number(value));
+    string formatted;
+
+
+    string ar[2];
+
+    string *p = ar;
+
+    ar[0] = value / 60 > 9 ? std::to_string(value/60) : ("0" + std::to_string(value/60));
+    ar[1] = value % 60 > 9 ? std::to_string(value%60) : ("0" + std::to_string(value%60));
+
+    formatted = *p + ":" + *(p+1);
+
+    ui->searchRecipeTimer->setText(QString::fromStdString(formatted));
 }
 
 
@@ -559,10 +505,45 @@ void MainWindow::on_actualRecipeIngredients_itemClicked(QListWidgetItem *item)
                 if (item->text() == i->getName()) {
                     //ui->listOfIngredients->removeItemWidget(item);
                     item->setHidden(false);
+                    item->setCheckState(Qt::Unchecked);
                 }
             }
         }
     }
 
+}
+
+
+void MainWindow::on_inspectRecipeDelete_clicked()
+{
+    bool b = false;
+    bool *bp = &b;
+
+    Popup *p = new Popup("Are you sure you want to delete", bp);
+
+    p->setModal(true);
+    p->exec();
+    delete p;
+
+    if(b) {
+
+        for(Recipe *r : recipes) {
+
+            if(r->getName() == ui->inspectRecipeName->text()) {
+
+                for(int z = 0; z < ui->listOfRecipes->count(); z++) {
+                    QListWidgetItem *item = ui->listOfRecipes->item(z);
+                    if(item->text() == r->getName()) {
+                        delete item;
+                    }
+                }
+            }
+
+            int pos;
+            pos = distance(recipes.begin(), std::find(recipes.begin(), recipes.end(), r));
+            recipes.erase(recipes.begin() + pos);
+        }
+        ui->stackedWidget->setCurrentIndex(0);
+    }
 }
 

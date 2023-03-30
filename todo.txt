@@ -1,13 +1,11 @@
 General:
+	When creating recipes, it now adds multiple
+	Allergies not importing
 	~ when adding ingredients to recipes, check to see if recipe is already in
-	make bool value EDITING when editing 
-	Format time with slider
-Inspect Recipe:
-	if editing recipe and user clicks add, then delete the old one
+	removing ingredients from recipe still keeps them there or soemthing
 
 Add Recipe:
-	Make time to make formatted for time
-	When adding ingredients users should only be able to select one ingredient at a time
+	 ~ When adding ingredients users should only be able to select one ingredient at a time
 
 Inheritance:
 	Write to CSV
@@ -24,8 +22,8 @@ X QBoxLayout
 X Virtual functions
   template classes
   Multiple inheritance
-X namespaces				//apparently easy
-  Programmer defined exceptions
+X namespaces				
+X Programmer defined exceptions
 X Unions
 X Operator overloading
 X Abstract classes
@@ -40,7 +38,7 @@ X Inheritance
 X Destructors
 X Memory management
 X Header files (inclusion guards)
-  Arrays and pointers
+X Arrays and pointers
 X Friendship
 X Global variables
 X Private, Public, Protected

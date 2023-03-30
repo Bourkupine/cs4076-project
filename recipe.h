@@ -46,9 +46,7 @@ public:
     map<QString, bool> getAllergies();
     int getDifficulty();
 
-
     friend class MainWindow;
-
 };
 
 #endif // RECIPE_H

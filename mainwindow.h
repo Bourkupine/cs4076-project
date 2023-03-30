@@ -8,7 +8,7 @@
 #include "qlistwidget.h"
 
 #include "recipe.h"
-#include "popup.h"
+#include "popup.h" //warning here but it is actually required
 
 #include "csvhandler.h"
 
@@ -39,8 +39,6 @@ private slots:
 
     void on_createIngredient_clicked();
 
-    void on_inspectIngredientEdit_clicked();
-
     void on_inspectIngredientDelete_clicked();
 
     void on_viewIngredient_clicked();
@@ -68,6 +66,8 @@ private slots:
     void on_actionSave_triggered();
 
     void on_actualRecipeIngredients_itemClicked(QListWidgetItem *item);
+
+    void on_inspectRecipeDelete_clicked();
 
 private:
     Ui::MainWindow *ui;

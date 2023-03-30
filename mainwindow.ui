@@ -58,7 +58,7 @@
       <item>
        <widget class="QStackedWidget" name="stackedWidget">
         <property name="currentIndex">
-         <number>0</number>
+         <number>1</number>
         </property>
         <widget class="QWidget" name="viewRecipe">
          <widget class="QWidget" name="gridLayoutWidget_6">
@@ -198,6 +198,9 @@ QRadioButton::indicator:unchecked {
                </item>
                <item>
                 <widget class="QSlider" name="searchRecipeSlider">
+                 <property name="maximum">
+                  <number>180</number>
+                 </property>
                  <property name="orientation">
                   <enum>Qt::Horizontal</enum>
                  </property>
@@ -286,13 +289,6 @@ QCheckBox::indicator:unchecked {
              </property>
             </widget>
            </item>
-           <item row="5" column="1">
-            <widget class="QPushButton" name="inspectIngredientEdit">
-             <property name="text">
-              <string>Edit</string>
-             </property>
-            </widget>
-           </item>
            <item row="2" column="0" alignment="Qt::AlignRight">
             <widget class="QLabel" name="label_12">
              <property name="text">
@@ -304,13 +300,6 @@ QCheckBox::indicator:unchecked {
             <widget class="QLabel" name="label_13">
              <property name="text">
               <string>Type: </string>
-             </property>
-            </widget>
-           </item>
-           <item row="5" column="2">
-            <widget class="QPushButton" name="inspectIngredientDelete">
-             <property name="text">
-              <string>Delete</string>
              </property>
             </widget>
            </item>
@@ -367,6 +356,25 @@ QCheckBox::indicator:unchecked {
              </property>
              <property name="readOnly">
               <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="1" colspan="2" alignment="Qt::AlignHCenter">
+            <widget class="QPushButton" name="inspectIngredientDelete">
+             <property name="minimumSize">
+              <size>
+               <width>150</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>300</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>Delete</string>
              </property>
             </widget>
            </item>
@@ -572,7 +580,7 @@ QCheckBox::indicator:unchecked {
               </size>
              </property>
              <property name="maximum">
-              <number>9999</number>
+              <number>180</number>
              </property>
             </widget>
            </item>
@@ -695,11 +703,11 @@ QRadioButton::indicator:unchecked {
            <rect>
             <x>30</x>
             <y>30</y>
-            <width>571</width>
+            <width>541</width>
             <height>431</height>
            </rect>
           </property>
-          <layout class="QGridLayout" name="gridLayout_5" columnstretch="1,2,1,1,1,1,1,1,1">
+          <layout class="QGridLayout" name="gridLayout_5" columnstretch="1,0,0,0,0,0,0,0,0">
            <property name="sizeConstraint">
             <enum>QLayout::SetDefaultConstraint</enum>
            </property>
@@ -709,6 +717,111 @@ QRadioButton::indicator:unchecked {
            <property name="spacing">
             <number>6</number>
            </property>
+           <item row="4" column="0" alignment="Qt::AlignRight">
+            <widget class="QLabel" name="label_18">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>Difficulty: </string>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="3">
+            <widget class="QLineEdit" name="inspectRecipeMakes">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>50</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="readOnly">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="2">
+            <widget class="QLabel" name="label_19">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>Makes: </string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0">
+            <widget class="QLabel" name="label_15">
+             <property name="text">
+              <string>Recipe Name:</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="4" colspan="5">
+            <widget class="QListWidget" name="inspectRecipeIngredients">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="7">
+            <widget class="QLabel" name="label_16">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>Time:</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="5">
+            <layout class="QHBoxLayout" name="horizontalLayout_7">
+             <item>
+              <widget class="QCheckBox" name="inspectRecipeVegetarian">
+               <property name="text">
+                <string>Vegetarian</string>
+               </property>
+               <property name="checkable">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QCheckBox" name="inspectRecipeVegan">
+               <property name="text">
+                <string>Vegan</string>
+               </property>
+               <property name="checkable">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
            <item row="1" column="0" colspan="3" alignment="Qt::AlignHCenter|Qt::AlignVCenter">
             <widget class="QLabel" name="label_20">
              <property name="text">
@@ -726,35 +839,25 @@ QRadioButton::indicator:unchecked {
              </property>
             </widget>
            </item>
-           <item row="0" column="1" colspan="7">
-            <widget class="QLineEdit" name="inspectRecipeName">
+           <item row="4" column="1" alignment="Qt::AlignLeft">
+            <widget class="QLineEdit" name="inspectRecipeDifficulty">
              <property name="sizePolicy">
-              <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
-             <property name="minimumSize">
+             <property name="maximumSize">
               <size>
-               <width>0</width>
-               <height>0</height>
+               <width>50</width>
+               <height>16777215</height>
               </size>
              </property>
              <property name="text">
-              <string/>
+              <string>Medium</string>
              </property>
              <property name="readOnly">
               <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="4" colspan="5">
-            <widget class="QListWidget" name="inspectRecipeIngredients">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
              </property>
             </widget>
            </item>
@@ -785,67 +888,25 @@ QCheckBox::indicator:unchecked {
              </property>
             </widget>
            </item>
-           <item row="4" column="0" alignment="Qt::AlignRight">
-            <widget class="QLabel" name="label_18">
+           <item row="0" column="1" colspan="7">
+            <widget class="QLineEdit" name="inspectRecipeName">
              <property name="sizePolicy">
-              <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+              <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
-             <property name="text">
-              <string>Difficulty: </string>
-             </property>
-            </widget>
-           </item>
-           <item row="4" column="7">
-            <widget class="QLabel" name="label_16">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="text">
-              <string>Time:</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-             </property>
-            </widget>
-           </item>
-           <item row="4" column="1" alignment="Qt::AlignLeft">
-            <widget class="QLineEdit" name="inspectRecipeDifficulty">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="maximumSize">
+             <property name="minimumSize">
               <size>
-               <width>50</width>
-               <height>16777215</height>
+               <width>0</width>
+               <height>0</height>
               </size>
              </property>
              <property name="text">
-              <string>Medium</string>
+              <string/>
              </property>
              <property name="readOnly">
               <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="4" column="2">
-            <widget class="QLabel" name="label_19">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="text">
-              <string>Makes: </string>
              </property>
             </widget>
            </item>
@@ -877,60 +938,6 @@ QCheckBox::indicator:unchecked {
              </property>
             </widget>
            </item>
-           <item row="0" column="0">
-            <widget class="QLabel" name="label_15">
-             <property name="text">
-              <string>Recipe Name:</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-             </property>
-            </widget>
-           </item>
-           <item row="5" column="4" colspan="5" alignment="Qt::AlignHCenter">
-            <widget class="QPushButton" name="inspectRecipeDelete">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>100</width>
-               <height>0</height>
-              </size>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>150</width>
-               <height>16777215</height>
-              </size>
-             </property>
-             <property name="text">
-              <string>Delete</string>
-             </property>
-            </widget>
-           </item>
-           <item row="4" column="3">
-            <widget class="QLineEdit" name="inspectRecipeMakes">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>50</width>
-               <height>16777215</height>
-              </size>
-             </property>
-             <property name="readOnly">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
            <item row="3" column="0" colspan="4">
             <widget class="QTextEdit" name="inspectRecipeInstructions">
              <property name="sizePolicy">
@@ -944,32 +951,8 @@ QCheckBox::indicator:unchecked {
              </property>
             </widget>
            </item>
-           <item row="4" column="5">
-            <layout class="QHBoxLayout" name="horizontalLayout_7">
-             <item>
-              <widget class="QCheckBox" name="inspectRecipeVegetarian">
-               <property name="text">
-                <string>Vegetarian</string>
-               </property>
-               <property name="checkable">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QCheckBox" name="inspectRecipeVegan">
-               <property name="text">
-                <string>Vegan</string>
-               </property>
-               <property name="checkable">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-           <item row="5" column="0" colspan="4" alignment="Qt::AlignHCenter">
-            <widget class="QPushButton" name="inspectRecipeEdit">
+           <item row="5" column="0" colspan="9" alignment="Qt::AlignHCenter">
+            <widget class="QPushButton" name="inspectRecipeDelete">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                <horstretch>0</horstretch>
@@ -978,18 +961,18 @@ QCheckBox::indicator:unchecked {
              </property>
              <property name="minimumSize">
               <size>
-               <width>100</width>
+               <width>150</width>
                <height>0</height>
               </size>
              </property>
              <property name="maximumSize">
               <size>
-               <width>150</width>
+               <width>16777215</width>
                <height>16777215</height>
               </size>
              </property>
              <property name="text">
-              <string>Edit</string>
+              <string>Delete</string>
              </property>
             </widget>
            </item>
@@ -1113,7 +1096,7 @@ QCheckBox::indicator:unchecked {
      <x>0</x>
      <y>0</y>
      <width>808</width>
-     <height>22</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_File">
