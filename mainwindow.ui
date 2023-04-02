@@ -58,7 +58,7 @@
       <item>
        <widget class="QStackedWidget" name="stackedWidget">
         <property name="currentIndex">
-         <number>0</number>
+         <number>3</number>
         </property>
         <widget class="QWidget" name="viewRecipe">
          <widget class="QWidget" name="gridLayoutWidget_6">
@@ -452,7 +452,11 @@ QCheckBox::indicator:unchecked {
             <number>6</number>
            </property>
            <item row="6" column="4">
-            <widget class="QSpinBox" name="ingredientAmount"/>
+            <widget class="QSpinBox" name="ingredientAmount">
+             <property name="maximum">
+              <number>1000</number>
+             </property>
+            </widget>
            </item>
            <item row="2" column="0" rowspan="5" colspan="3">
             <widget class="QTextEdit" name="createRecipeInstructions"/>
