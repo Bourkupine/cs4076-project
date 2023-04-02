@@ -4,6 +4,8 @@
 
 using namespace std;
 
+namespace ce {
+
 class CustomException : public exception
 {
 public:
@@ -13,6 +15,6 @@ public:
 private:
     char* message = (char *) "My Exception";
 };
-
+}
 
 #endif // CUSTOMEXCEPTION_H

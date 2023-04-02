@@ -34,7 +34,8 @@ private:
     DietaryUnion dietaryUnion;
 
 public:
-    Recipe(QString name,int diff, bool fav, int makes, int time, QString instructions, vector<IngredientAmount*> IngredientAmount, map<QString, bool> allergies, DietaryUnion dietary);
+    Recipe(QString name,int diff, bool fav, int makes, int time, QString instructions, vector<IngredientAmount*> IngredientAmount, DietaryUnion dietary);
+    Recipe(QString name,int diff, bool fav, int makes, int time, QString instructions, vector<IngredientAmount*> ingredientAmount, int dietary);
     void calcAllergies();
 
     QString getName();
@@ -49,6 +50,7 @@ public:
 
 
     friend class MainWindow;
+    friend class CSVhandler;
 };
 
 #endif // RECIPE_H

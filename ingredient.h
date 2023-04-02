@@ -25,6 +25,11 @@ public:
     void setAllergies(map<QString, bool> m);
     QString getName();
     map<QString, bool>& getAllergies();
+    QString& operator=(Ingredient* i);
+
+    friend class MainWindwow;
+    friend class CSVhandler;
+
 };
 
 #endif // INGREDIENT_H

@@ -58,7 +58,7 @@
       <item>
        <widget class="QStackedWidget" name="stackedWidget">
         <property name="currentIndex">
-         <number>4</number>
+         <number>0</number>
         </property>
         <widget class="QWidget" name="viewRecipe">
          <widget class="QWidget" name="gridLayoutWidget_6">
@@ -1096,15 +1096,18 @@ QCheckBox::indicator:unchecked {
      <x>0</x>
      <y>0</y>
      <width>808</width>
-     <height>22</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_File">
     <property name="title">
      <string>&amp;File</string>
     </property>
+    <addaction name="separator"/>
     <addaction name="action_Quit"/>
+    <addaction name="separator"/>
     <addaction name="actionSave"/>
+    <addaction name="action_Open"/>
    </widget>
    <addaction name="menu_File"/>
   </widget>
@@ -1123,6 +1126,14 @@ QCheckBox::indicator:unchecked {
    </property>
    <property name="shortcut">
     <string>Ctrl+S</string>
+   </property>
+  </action>
+  <action name="action_Open">
+   <property name="text">
+    <string>&amp;Open</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
    </property>
   </action>
  </widget>

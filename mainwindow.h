@@ -17,7 +17,7 @@ namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 using namespace std;
 
-class MainWindow : public QMainWindow, public CustomException, public csv::CSVhandler
+class MainWindow : public QMainWindow, public ce::CustomException, public CSVhandler
 {
     Q_OBJECT
 
@@ -68,6 +68,9 @@ private slots:
     void on_actualRecipeIngredients_itemClicked(QListWidgetItem *item);
 
     void on_inspectRecipeDelete_clicked();
+
+    void on_action_Open_triggered();
+
 
 private:
     Ui::MainWindow *ui;

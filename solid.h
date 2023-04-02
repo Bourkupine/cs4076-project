@@ -11,6 +11,8 @@ public:
     Solid(QString type);
     Solid(QString type, QString name, map<QString, bool> allergies);
     QString getType();
+
+
 };
 
 #endif // SOLID_H

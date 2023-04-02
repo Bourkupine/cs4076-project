@@ -2,8 +2,10 @@
 #include "./ui_mainwindow.h"
 #include "liquid.h"
 #include "solid.h"
+#include "csvhandler.h"
 
 #include <algorithm>
+#include "QFile"
 
 //preprocessor directives
 #define EASY 0
@@ -14,6 +16,8 @@
 vector<Recipe*> recipes;
 
 #include <iostream>
+
+
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -95,7 +99,6 @@ void MainWindow::on_addIngredients_clicked()
 {
     ui->stackedWidget->setCurrentIndex(5);
 }
-
 //create recipe
 void MainWindow::on_createRecipe_clicked() //create a recipe
 {
@@ -109,52 +112,54 @@ void MainWindow::on_createRecipe_clicked() //create a recipe
      * Difficulty
      */
 
-    QString recipeName = ui->createRecipeName->text();
-    int makes = ui->createRecipeMakes->value();
-    bool fav = ui->createRecipeFav->isChecked();
-    int time = ui->createRecipeTime->value();
-    QString instructions = ui->createRecipeInstructions->toPlainText();
+    if (tempIngredientAmount.size() > 0) {
+        QString recipeName = ui->createRecipeName->text();
+        int makes = ui->createRecipeMakes->value();
+        bool fav = ui->createRecipeFav->isChecked();
+        int time = ui->createRecipeTime->value();
+        QString instructions = ui->createRecipeInstructions->toPlainText();
 
-    //dietry union
-    Recipe::DietaryUnion un;
+        //dietry union
+        Recipe::DietaryUnion un;
 
-    if(ui->createRecipeVegan->isChecked()) {
-        un.dietary = 2;
-    } else if(ui->createRecipeVegetarian->isChecked()) {
-        un.dietary = 1;
-    } else {
-        un.dietary = 0;
+        if(ui->createRecipeVegan->isChecked()) {
+            un.dietary = 2;
+        } else if(ui->createRecipeVegetarian->isChecked()) {
+            un.dietary = 1;
+        } else {
+            un.dietary = 0;
+        }
+
+        //get Difficulty
+        int diff = ui->createRecipeEasy->isChecked() ? 0 : (ui->createRecipeMedium->isChecked() ? 1 : 2);
+
+        //create recipe
+        Recipe *r = new Recipe(recipeName, diff, fav, makes, time, instructions, tempIngredientAmount, un);
+
+        //add to recipe vector and add to list
+        recipes.insert(recipes.end(), r);
+        ui->listOfRecipes->addItem(recipeName);
+
+        //reset fields
+        ui->createRecipeName->setText("");
+        ui->createRecipeMakes->setValue(0);
+        ui->createRecipeFav->setCheckState(Qt::Unchecked);
+        ui->createRecipeTime->setValue(0);
+        ui->createRecipeInstructions->setText("");
+        ui->createRecipeVegan->setCheckState(Qt::Unchecked);
+        ui->createRecipeVegetarian->setCheckState(Qt::Unchecked);
+
+        tempAllergies.clear();
+        tempIngredientAmount.clear();
+        ui->actualRecipeIngredients->clear();
+
+        for(int row = 0; row < ui->createRecipeIngredients->count(); row++) { //might need to use size() instead of count()
+            QListWidgetItem *item = ui->createRecipeIngredients->item(row);
+            item->setHidden(false);
+            item->setCheckState(Qt::Unchecked);
+        }
+
     }
-
-    //get Difficulty
-    int diff = ui->createRecipeEasy->isChecked() ? 0 : (ui->createRecipeMedium->isChecked() ? 1 : 2);
-
-    //create recipe
-    Recipe *r = new Recipe(recipeName, diff, fav, makes, time, instructions, tempIngredientAmount, tempAllergies, un);
-
-    //add to recipe vector and add to list
-    recipes.insert(recipes.end(), r);
-    ui->listOfRecipes->addItem(recipeName);
-
-    //reset fields
-    ui->createRecipeName->setText("");
-    ui->createRecipeMakes->setValue(0);
-    ui->createRecipeFav->setCheckState(Qt::Unchecked);
-    ui->createRecipeTime->setValue(0);
-    ui->createRecipeInstructions->setText("");
-    ui->createRecipeVegan->setCheckState(Qt::Unchecked);
-    ui->createRecipeVegetarian->setCheckState(Qt::Unchecked);
-
-    tempAllergies.clear();
-    tempIngredientAmount.clear();
-    ui->actualRecipeIngredients->clear();
-
-    for(int row = 0; row < ui->createRecipeIngredients->count(); row++) { //might need to use size() instead of count()
-        QListWidgetItem *item = ui->createRecipeIngredients->item(row);
-        item->setHidden(false);
-        item->setCheckState(Qt::Unchecked);
-    }
-
 }
 
 //create ingredient
@@ -262,7 +267,7 @@ void MainWindow::on_addIngredientToRecipe_clicked()
         int amount = ui->ingredientAmount->value();
         QListWidgetItem *item = ui->createRecipeIngredients->currentItem();
 
-        if (item == nullptr) {throw CustomException((char *)"No Ingredient was added");}
+        if (item == nullptr) {throw ce::CustomException((char *)"No Ingredient was added");}
 
         for (Ingredient *i : ingredients) {
 
@@ -278,7 +283,7 @@ void MainWindow::on_addIngredientToRecipe_clicked()
 
         ui->ingredientAmount->setValue(0);
 
-    } catch(CustomException ce) {
+    } catch(ce::CustomException ce) {
         cout << ce.what() << endl;
     }
 }
@@ -477,10 +482,33 @@ void MainWindow::on_searchRecipeFav_stateChanged(int arg1)
 void MainWindow::on_actionSave_triggered()
 {
 
-    for(Ingredient * i : ingredients) {
-        writeIToCSV(i->getName(), i->getAllergies(), i->getType());
+    //QFile fileI = QFile("..//cs4076_21332142//ingredients.csv"); // for QT
+    QFile fileI = QFile(".//ingredients.csv"); // for exe
+    fileI.open(QIODevice::WriteOnly | QIODevice::Text);
+    QTextStream out = QTextStream(&fileI);
+    CSVhandler h;
+    for(Ingredient *i : ingredients) {
+
+        h.csvWriteI(i, out);
     }
-    //writeRToCSV();
+    fileI.close();
+    ui->listOfIngredients->clear();
+    ingredients.clear();
+    ui->createRecipeIngredients->clear();
+
+    //QFile fileR = QFile("..//cs4076_21332142//recipes.csv"); for qt
+    QFile fileR = QFile(".//recipes.csv"); //for exe
+    fileR.open(QIODevice::WriteOnly | QIODevice::Text);
+    QTextStream outR = QTextStream(&fileR);
+
+    for(Recipe *r : recipes) {
+
+        h.csvWriteR(r, outR);
+    }
+    fileR.close();
+    ui->listOfRecipes->clear();
+    recipes.clear();
+
 }
 
 
@@ -527,35 +555,97 @@ void MainWindow::on_actualRecipeIngredients_itemClicked(QListWidgetItem *item)
 }
 
 void MainWindow::on_inspectRecipeDelete_clicked() {
-        bool b = false;
-        bool *bp = &b;
+    bool b = false;
+    bool *bp = &b;
 
-        Popup *p = new Popup("Are you sure you want to delete", bp);
+    Popup *p = new Popup("Are you sure you want to delete", bp);
 
-        p->setModal(true);
-        p->exec();
-        delete p;
+    p->setModal(true);
+    p->exec();
+    delete p;
 
-        if(b) {
+    if(b) {
 
-            for(Recipe *r : recipes) {
+        for(Recipe *r : recipes) {
 
-                if(r->getName() == ui->inspectRecipeName->text()) {
+            if(r->getName() == ui->inspectRecipeName->text()) {
 
-                    for(int z = 0; z < ui->listOfRecipes->count(); z++) {
-                        QListWidgetItem *item = ui->listOfRecipes->item(z);
-                        if(item->text() == r->getName()) {
-                            delete item;
-                        }
+                for(int z = 0; z < ui->listOfRecipes->count(); z++) {
+                    QListWidgetItem *item = ui->listOfRecipes->item(z);
+                    if(item->text() == r->getName()) {
+                        delete item;
                     }
                 }
-
-                int pos;
-                pos = distance(recipes.begin(), std::find(recipes.begin(), recipes.end(), r));
-                recipes.erase(recipes.begin() + pos);
             }
-            ui->stackedWidget->setCurrentIndex(0);
+
+            int pos;
+            pos = distance(recipes.begin(), std::find(recipes.begin(), recipes.end(), r));
+            recipes.erase(recipes.begin() + pos);
         }
+        ui->stackedWidget->setCurrentIndex(0);
     }
+}
+
+
+void MainWindow::on_action_Open_triggered()
+{
+
+    //QFile fileI = QFile("..//cs4076_21332142//ingredients.csv"); (for QT)
+    QFile fileI = QFile(".//ingredients.csv"); // for exe
+    fileI.open(QIODevice::ReadOnly | QIODevice::Text);
+    QTextStream in = QTextStream(&fileI);
+    CSVhandler h;
+
+    ui->listOfIngredients->clear();
+    ingredients.clear();
+    ui->createRecipeIngredients->clear();
+
+    while(!in.atEnd()) {
+
+        Ingredient *i;
+
+        QString line = in.readLine();
+
+        if(!line.isEmpty()) {
+
+            //error here
+            i = h.csvReadI(line);
+        }
+        ingredients.push_back(i);
+        ui->listOfIngredients->addItem(i->getName());
+
+        QListWidgetItem *item = new QListWidgetItem(i->getName());
+        item->setCheckState(Qt::Unchecked);
+        ui->createRecipeIngredients->addItem(item);
+
+    }
+    fileI.close();
+    //*
+    //QFile fileR = QFile("..//cs4076_21332142//recipes.csv"); (For QT)
+    QFile fileR = QFile(".//recipes.csv"); //(works for EXE)
+    fileR.open(QIODevice::ReadOnly | QIODevice::Text);
+    QTextStream inR = QTextStream(&fileR);
+
+    ui->listOfRecipes->clear();
+    recipes.clear();
+
+    while(!inR.atEnd()) {
+
+        Recipe* r;
+
+        QString line = inR.readLine();
+
+        if(!line.isEmpty()) {
+            r = h.csvReadR(line);
+        }
+
+        recipes.push_back(r);
+        ui->listOfRecipes->addItem(r->getName());
+
+    }
+
+    fileR.close();
+    //*/
+}
 
 

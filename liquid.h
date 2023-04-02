@@ -4,7 +4,7 @@
 #include "customexception.h"
 #include "ingredient.h"
 
-class Liquid : public Ingredient, CustomException
+class Liquid : public Ingredient
 {
 private:
     QString type;

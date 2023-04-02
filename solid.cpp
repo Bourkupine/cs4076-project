@@ -20,3 +20,5 @@ QString Solid::getType() {
     return type;
 }
 
+
+

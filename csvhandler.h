@@ -7,35 +7,44 @@
 #include <fstream>
 #include <sstream>
 #include <map>
-#include "ingredientamount.h"
 #include <QTextStream>
+#include "ingredient.h"
+#include "recipe.h"
+#include "solid.h"
+#include "liquid.h"
+#include "QFile"
 
 using namespace std;
 
-namespace csv {
-    class CSVhandler
-    {
-    public:
-        CSVhandler();
-
-        template<typename T>
-        void csvWrite(T t, QTextStream &ts);
 
 
+class CSVhandler
+{
+public:
+    CSVhandler();
 
 
-          //LEGACY
-//        void writeRToCSV(QString name, int diff, bool fav, int makes, int time, QString instructions, vector<IngredientAmount> IngredientAmount, int dietary);
-//        void writeIToCSV(QString name, map<QString, bool>, QString type);
-//        vector<string> readIFromCSV();
-//        vector<string> readRFromCSV();
+    void csvWriteI(Ingredient *i, QTextStream &ts);
+    void csvWriteR(Recipe *r, QTextStream &ts);
 
-    private:
+    Ingredient* csvReadI(QString str);
+    Recipe* csvReadR(QString str);
 
-        string rootPath;
 
-    };
+private:
 
-}
+};
+
+
+
 
 #endif // CSVHANDLER_H
+
+
+
+
+
+
+
+
+
